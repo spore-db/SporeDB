@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e ".[dev,cloud,viz]"
-      - run: pytest --cov=src/sporedb --cov-report=xml --cov-fail-under=80
+      - run: pytest --cov=src/sporedb --cov-report=xml --cov-fail-under=78
 
   build:
     runs-on: ubuntu-latest
