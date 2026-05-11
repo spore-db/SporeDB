@@ -58,3 +58,6 @@ sporedb_data/
 
 # Internal specs/plans
 docs/superpowers/
+
+# Launch drafts (not for public repo)
+docs/launch/
