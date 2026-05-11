@@ -1,0 +1,4025 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Bioprocess-native time-series database">
+      
+      
+      
+        <link rel="canonical" href="https://spore-db.github.io/SporeDB/validation/OQ_protocol/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Operational Qualification Protocol - SporeDB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#operational-qualification-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SporeDB" class="md-header__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SporeDB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Operational Qualification Protocol
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/selfhosted/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SporeDB" class="md-nav__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SporeDB
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/selfhosted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Hosted
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/railway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Railway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/render/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/fly-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fly.io
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS ECS/Fargate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/digitalocean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DigitalOcean
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/sporedb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SporeDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sporedb-self-hosted-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SporeDB Self-Hosted Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-functional-test-cases-by-feature-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Functional Test Cases by Feature Area
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Functional Test Cases by Feature Area">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-audit-trail-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Audit Trail Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 Audit Trail Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-001-data-write-produces-signed-audit-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-001: Data Write Produces Signed Audit Entry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-002-sha-256-hash-chain-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-002: SHA-256 Hash Chain Integrity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-003-merkle-tree-checkpoint-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-003: Merkle Tree Checkpoint Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-004-audit-trail-export-completeness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-004: Audit Trail Export Completeness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-005-tamper-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-005: Tamper Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-rbac-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 RBAC Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 RBAC Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-006-admin-user-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-006: Admin User Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-007-editor-batch-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-007: Editor Batch Permissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-008-viewer-read-only-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-008: Viewer Read-Only Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-009-unauthorized-access-denial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-009: Unauthorized Access Denial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-010-role-changes-take-effect-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-010: Role Changes Take Effect Immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-electronic-signature-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Electronic Signature Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Electronic Signature Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-011-e-signature-requires-re-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-011: E-Signature Requires Re-Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-012-signed-record-contains-required-manifestations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-012: Signed Record Contains Required Manifestations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-013-e-signature-permanently-linked-to-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-013: E-Signature Permanently Linked to Record
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-014-two-component-e-signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-014: Two-Component E-Signature
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-data-integrity-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Data Integrity Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 Data Integrity Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-015-import-data-matches-source-bit-for-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-015: Import Data Matches Source Bit-for-Bit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-016-timestamp-normalization-to-utc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-016: Timestamp Normalization to UTC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-017-unit-conversion-accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-017: Unit Conversion Accuracy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-018-batch-metadata-persistence-across-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-018: Batch Metadata Persistence Across Sessions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-batch-management-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Batch Management Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Batch Management Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-019-create-batch-with-full-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-019: Create Batch with Full Metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-020-search-and-filter-batches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-020: Search and Filter Batches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-021-delete-batch-cascades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-021: Delete Batch Cascades
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-21-cfr-part-11-specific-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 21 CFR Part 11 Specific Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 21 CFR Part 11 Specific Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-001-1110a-system-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-001: 11.10(a) -- System Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-002-1110b-accurate-and-complete-copies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-002: 11.10(b) -- Accurate and Complete Copies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-003-1110c-record-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-003: 11.10(c) -- Record Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-004-1110d-limiting-system-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-004: 11.10(d) -- Limiting System Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-005-1110e-audit-trails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-005: 11.10(e) -- Audit Trails
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-006-1110k1-authority-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-006: 11.10(k)(1) -- Authority Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-007-1110k2-device-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-007: 11.10(k)(2) -- Device Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-008-1150-signature-manifestations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-008: 11.50 -- Signature Manifestations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-009-1170-signaturerecord-linking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-009: 11.70 -- Signature/Record Linking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-010-11100-general-e-signature-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-010: 11.100 -- General E-Signature Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-cfr-011-11200-e-signature-components-and-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-CFR-011: 11.200 -- E-Signature Components and Controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-eu-annex-11-specific-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. EU Annex 11 Specific Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. EU Annex 11 Specific Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-ax-001-data-storage-and-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-AX-001: Data Storage and Backup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-ax-002-audit-trail-completeness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-AX-002: Audit Trail Completeness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-ax-003-electronic-signature-equivalence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-AX-003: Electronic Signature Equivalence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-ax-004-access-control-effectiveness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-AX-004: Access Control Effectiveness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-ax-005-data-integrity-during-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-AX-005: Data Integrity During Transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-boundary-and-negative-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Boundary and Negative Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Boundary and Negative Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oq-neg-001-invalid-credentials-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-NEG-001: Invalid Credentials Rejected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-neg-002-malformed-csv-import-fails-gracefully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-NEG-002: Malformed CSV Import Fails Gracefully
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-neg-003-empty-batch-name-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-NEG-003: Empty Batch Name Rejected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oq-neg-004-concurrent-writes-to-same-batch-handled-safely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OQ-NEG-004: Concurrent Writes to Same Batch Handled Safely
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-deviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Deviations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-summary-of-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Summary of Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Summary of Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#by-feature-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Feature Area
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-approval-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Approval Signatures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-reference-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Reference Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-test-user-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Test User Accounts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-c-version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Version History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="operational-qualification-protocol">Operational Qualification Protocol<a class="headerlink" href="#operational-qualification-protocol" title="Permanent link">&para;</a></h1>
+<h2 id="sporedb-self-hosted-deployment">SporeDB Self-Hosted Deployment<a class="headerlink" href="#sporedb-self-hosted-deployment" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Document ID</strong></td>
+<td>OQ-SPOREDB-001</td>
+</tr>
+<tr>
+<td><strong>Version</strong></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><strong>System</strong></td>
+<td>SporeDB v0.1.0</td>
+</tr>
+<tr>
+<td><strong>Effective Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Prepared By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Reviewed By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Approved By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-purpose">1. Purpose<a class="headerlink" href="#1-purpose" title="Permanent link">&para;</a></h2>
+<p>This Operational Qualification (OQ) protocol verifies that SporeDB functions correctly per its design specifications across all compliance-relevant features. Successful execution confirms that audit trail integrity, role-based access control, electronic signatures, data integrity, and batch management all operate as intended.</p>
+<p>This protocol tests compliance with:</p>
+<ul>
+<li>FDA 21 CFR Part 11 -- Electronic Records; Electronic Signatures</li>
+<li>EU Annex 11 -- Computerised Systems (including 2025 draft provisions)</li>
+<li>GAMP 5 guidelines for computerized system validation</li>
+</ul>
+<p>This protocol should be executed only after successful completion of Installation Qualification (IQ-SPOREDB-001).</p>
+<h2 id="2-scope">2. Scope<a class="headerlink" href="#2-scope" title="Permanent link">&para;</a></h2>
+<p>This OQ protocol covers functional verification of:</p>
+<ul>
+<li><strong>Audit trail</strong> -- Ed25519 signing, SHA-256 hash chain, Merkle tree checkpoints, tamper detection</li>
+<li><strong>Role-Based Access Control (RBAC)</strong> -- Admin, Editor, and Viewer role enforcement</li>
+<li><strong>Electronic signatures</strong> -- Re-authentication, signer identity, record linking</li>
+<li><strong>Data integrity</strong> -- Import fidelity, timestamp normalization, unit conversions, metadata persistence</li>
+<li><strong>Batch management</strong> -- Create, search/filter, delete cascade operations</li>
+<li><strong>21 CFR Part 11 compliance</strong> -- All applicable sections (11.10 a-k, 11.50, 11.70, 11.100, 11.200)</li>
+<li><strong>EU Annex 11 compliance</strong> -- Data storage, audit trail, e-signatures, access control, data integrity</li>
+<li><strong>Boundary and negative tests</strong> -- Invalid inputs, concurrent writes, error handling</li>
+</ul>
+<h3 id="out-of-scope">Out of Scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Performance under production-level loads (covered in PQ-SPOREDB-001)</li>
+<li>Installation verification (covered in IQ-SPOREDB-001)</li>
+<li>Network penetration testing and external security assessment</li>
+</ul>
+<h2 id="3-test-environment">3. Test Environment<a class="headerlink" href="#3-test-environment" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Self-hosted per IQ-SPOREDB-001 (all IQ tests passed)</td>
+</tr>
+<tr>
+<td><strong>SporeDB Version</strong></td>
+<td>v0.1.0</td>
+</tr>
+<tr>
+<td><strong>Test Users</strong></td>
+<td>Admin (oq-admin), Editor (oq-editor), Viewer (oq-viewer)</td>
+</tr>
+<tr>
+<td><strong>Test Data</strong></td>
+<td>3 fermentation CSV files (10K-50K rows), sample metadata records</td>
+</tr>
+<tr>
+<td><strong>Access</strong></td>
+<td>CLI (<code>sporedb</code> command), HTTP API (curl/httpx), Python SDK</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-functional-test-cases-by-feature-area">4. Functional Test Cases by Feature Area<a class="headerlink" href="#4-functional-test-cases-by-feature-area" title="Permanent link">&para;</a></h2>
+<h3 id="41-audit-trail-tests">4.1 Audit Trail Tests<a class="headerlink" href="#41-audit-trail-tests" title="Permanent link">&para;</a></h3>
+<h4 id="oq-001-data-write-produces-signed-audit-entry">OQ-001: Data Write Produces Signed Audit Entry<a class="headerlink" href="#oq-001-data-write-produces-signed-audit-entry" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that every data write operation produces a cryptographically signed audit trail entry with an Ed25519 signature.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-editor user. <br> 2. Create a new batch: <code>sporedb batch create "OQ-Test-Batch-001" --organism "E. coli" --reactor "BR-01"</code> <br> 3. Query the audit trail for the most recent entry: <code>sporedb audit list --limit 1</code> <br> 4. Verify the entry contains: entry_id (UUIDv7), timestamp (UTC), user_id (oq-editor), action (create), entity_type (batch), signature (non-empty bytes), public_key_pem (non-empty). <br> 5. Verify the Ed25519 signature: <code>sporedb audit verify --entry-id &lt;entry_id&gt;</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Audit entry is created with all required fields. Ed25519 signature is valid and verifiable with the system public key.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-002-sha-256-hash-chain-integrity">OQ-002: SHA-256 Hash Chain Integrity<a class="headerlink" href="#oq-002-sha-256-hash-chain-integrity" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-002</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the SHA-256 hash chain links consecutive audit entries correctly.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Perform 10 sequential write operations (batch create, metadata update, data import, etc.). <br> 2. Export the audit trail: <code>sporedb audit export --format json --output oq002_trail.json</code> <br> 3. For each entry after the first, verify that <code>previous_entry_hash</code> equals the SHA-256 hash of the preceding entry. <br> 4. Verify the first entry has an empty <code>previous_entry_hash</code>. <br> 5. Alternatively, run: <code>sporedb compliance validate --check hash_chain</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All 10 entries are linked. First entry has empty previous_entry_hash. Each subsequent entry's previous_entry_hash matches the computed hash of the prior entry. Compliance validator reports PASS for hash_chain check.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-003-merkle-tree-checkpoint-verification">OQ-003: Merkle Tree Checkpoint Verification<a class="headerlink" href="#oq-003-merkle-tree-checkpoint-verification" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-003</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that after N audit entries, a Merkle tree checkpoint is created and the Merkle root can be verified against the entries.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Ensure at least 10 audit entries exist (from OQ-001 and OQ-002). <br> 2. Trigger a Merkle checkpoint: <code>sporedb compliance checkpoint</code> <br> 3. Retrieve the Merkle root hash. <br> 4. Run: <code>sporedb compliance validate --check merkle</code> <br> 5. Verify the Merkle tree leaf count matches the number of audit entries.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Merkle checkpoint is created. Merkle root hash is non-empty. Leaf count equals entry count. Compliance validator reports PASS for merkle check.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-004-audit-trail-export-completeness">OQ-004: Audit Trail Export Completeness<a class="headerlink" href="#oq-004-audit-trail-export-completeness" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-004</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the audit trail can be exported in its entirety and that the export contains all entries.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Count current audit entries: <code>sporedb audit list --count</code> <br> 2. Export to Parquet: <code>sporedb audit export --format parquet --output oq004_full_trail.parquet</code> <br> 3. Export to JSON: <code>sporedb audit export --format json --output oq004_full_trail.json</code> <br> 4. Count entries in each export file. <br> 5. Verify export counts match the live count from step 1.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Parquet and JSON exports both contain the exact number of entries matching the live count. No entries are missing or duplicated.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-005-tamper-detection">OQ-005: Tamper Detection<a class="headerlink" href="#oq-005-tamper-detection" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-005</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the compliance validator detects when an audit trail entry has been tampered with (modified, deleted, or reordered).</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Export the audit trail to a file. <br> 2. Copy the Parquet audit trail file: <code>cp data/audit/trail.parquet data/audit/trail_backup.parquet</code> <br> 3. Tamper with an entry: modify one byte of a hash or timestamp in the Parquet file using a hex editor or Python script. <br> 4. Run compliance validation: <code>sporedb compliance validate --regulation all</code> <br> 5. Verify the validator reports FAIL with details about the tampered entry. <br> 6. Restore the original file: <code>cp data/audit/trail_backup.parquet data/audit/trail.parquet</code> <br> 7. Re-run validation and confirm PASS.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Tampered file triggers a FAIL result with specific details (entry index, expected vs actual hash). Restored file triggers PASS.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="42-rbac-tests">4.2 RBAC Tests<a class="headerlink" href="#42-rbac-tests" title="Permanent link">&para;</a></h3>
+<h4 id="oq-006-admin-user-management">OQ-006: Admin User Management<a class="headerlink" href="#oq-006-admin-user-management" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-006</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that an admin user can create, modify, and delete other user accounts.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-admin. <br> 2. Create a new user: <code>sporedb admin create-user --username oq-test-user --role editor --password &lt;password&gt;</code> <br> 3. Verify user exists: <code>sporedb admin list-users</code> <br> 4. Modify user role: <code>sporedb admin update-user --username oq-test-user --role viewer</code> <br> 5. Verify role changed: <code>sporedb admin get-user --username oq-test-user</code> <br> 6. Delete user: <code>sporedb admin delete-user --username oq-test-user</code> <br> 7. Verify user no longer exists: <code>sporedb admin list-users</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All CRUD operations succeed for admin. Created user appears in list. Role change is reflected. Deleted user no longer appears. Each operation produces an audit trail entry.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-007-editor-batch-permissions">OQ-007: Editor Batch Permissions<a class="headerlink" href="#oq-007-editor-batch-permissions" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-007</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that an editor user can create and modify batches but cannot manage users.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-editor. <br> 2. Create a batch: <code>sporedb batch create "OQ-Editor-Batch"</code> -- expect success. <br> 3. Update batch metadata: <code>sporedb batch update "OQ-Editor-Batch" --notes "Updated by editor"</code> -- expect success. <br> 4. Import data into batch: <code>sporedb import csv test_data.csv --batch "OQ-Editor-Batch"</code> -- expect success. <br> 5. Attempt to create a user: <code>sporedb admin create-user --username hacker --role admin --password &lt;password&gt;</code> -- expect rejection (403 Forbidden). <br> 6. Attempt to delete a user: <code>sporedb admin delete-user --username oq-viewer</code> -- expect rejection (403 Forbidden).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Batch operations succeed. User management operations are rejected with 403 status.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-008-viewer-read-only-access">OQ-008: Viewer Read-Only Access<a class="headerlink" href="#oq-008-viewer-read-only-access" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-008</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that a viewer user can read data but cannot modify any records.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-viewer. <br> 2. List batches: <code>sporedb batch list</code> -- expect success with results. <br> 3. Query batch data: <code>sporedb query "SELECT * FROM 'OQ-Test-Batch-001' LIMIT 10"</code> -- expect success. <br> 4. Export data: <code>sporedb export csv "OQ-Test-Batch-001" --output viewer_export.csv</code> -- expect success. <br> 5. Attempt to create a batch: <code>sporedb batch create "Viewer-Illegal-Batch"</code> -- expect rejection (403). <br> 6. Attempt to delete a batch: <code>sporedb batch delete "OQ-Test-Batch-001"</code> -- expect rejection (403). <br> 7. Attempt to import data: <code>sporedb import csv test_data.csv --batch "OQ-Test-Batch-001"</code> -- expect rejection (403).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Read operations succeed. All write/delete operations are rejected with 403 status.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-009-unauthorized-access-denial">OQ-009: Unauthorized Access Denial<a class="headerlink" href="#oq-009-unauthorized-access-denial" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-009</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that unauthenticated requests are denied with appropriate error responses.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Send API request without authentication token: <code>curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/api/batches</code> <br> 2. Send API request with an expired/invalid JWT token: <code>curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer invalid-token" http://localhost:8000/api/batches</code> <br> 3. Send API request with a malformed Authorization header: <code>curl -s -o /dev/null -w "%{http_code}" -H "Authorization: NotBearer abc" http://localhost:8000/api/batches</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All three requests return HTTP 401 (Unauthorized) or 403 (Forbidden). Response body contains an error message. No data is returned.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-010-role-changes-take-effect-immediately">OQ-010: Role Changes Take Effect Immediately<a class="headerlink" href="#oq-010-role-changes-take-effect-immediately" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-010</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that when a user's role is changed, the new permissions are enforced on the very next request without requiring re-login.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-admin. <br> 2. Create test user with editor role: <code>sporedb admin create-user --username oq-role-test --role editor --password &lt;password&gt;</code> <br> 3. Authenticate as oq-role-test and create a batch -- expect success. <br> 4. From oq-admin session, change oq-role-test to viewer: <code>sporedb admin update-user --username oq-role-test --role viewer</code> <br> 5. Using oq-role-test's existing session/token, attempt to create another batch -- expect rejection (403). <br> 6. Clean up: delete oq-role-test user.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Role change is enforced immediately. The user's next write operation is rejected after downgrade to viewer.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="43-electronic-signature-tests">4.3 Electronic Signature Tests<a class="headerlink" href="#43-electronic-signature-tests" title="Permanent link">&para;</a></h3>
+<h4 id="oq-011-e-signature-requires-re-authentication">OQ-011: E-Signature Requires Re-Authentication<a class="headerlink" href="#oq-011-e-signature-requires-re-authentication" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-011</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that applying an electronic signature to a record requires the signer to re-enter their password (re-authentication) per 21 CFR Part 11 Section 11.200.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-editor. <br> 2. Create a batch and import data to produce a record. <br> 3. Attempt to sign the record without re-authentication (if API allows): <code>sporedb sign --batch "OQ-Sig-Test" --meaning "approved"</code> -- should prompt for password or reject. <br> 4. Sign with re-authentication: <code>sporedb sign --batch "OQ-Sig-Test" --meaning "approved" --password &lt;correct-password&gt;</code> -- expect success. <br> 5. Attempt to sign with incorrect password: <code>sporedb sign --batch "OQ-Sig-Test" --meaning "reviewed" --password wrong-password</code> -- expect rejection.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Signing without password is rejected. Signing with correct password succeeds. Signing with incorrect password is rejected.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-012-signed-record-contains-required-manifestations">OQ-012: Signed Record Contains Required Manifestations<a class="headerlink" href="#oq-012-signed-record-contains-required-manifestations" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-012</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that an electronic signature includes the signer's identity, the meaning of the signature, and a timestamp per 21 CFR Part 11 Section 11.50.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Sign a record as oq-editor with meaning "approved" (from OQ-011). <br> 2. Retrieve the signed record: <code>sporedb sign show --batch "OQ-Sig-Test"</code> <br> 3. Verify the signature record contains: signer_name (oq-editor's full name), signer_id (oq-editor), timestamp (UTC), meaning (one of: approved, reviewed, verified, released, rejected).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Signed record clearly displays: (a) printed name of the signer, (b) date and time of signing in UTC, (c) meaning associated with the signature (e.g., "approved").</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-013-e-signature-permanently-linked-to-record">OQ-013: E-Signature Permanently Linked to Record<a class="headerlink" href="#oq-013-e-signature-permanently-linked-to-record" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-013</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that an electronic signature is cryptographically and permanently linked to the signed record and cannot be excised, copied, or transferred to a different record per 21 CFR Part 11 Section 11.70.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Sign a record as oq-editor (from OQ-011/OQ-012). <br> 2. Retrieve the signature and its cryptographic binding (record hash included in signed payload). <br> 3. Verify the signature JWT includes the record's content hash in its claims. <br> 4. Modify the record data (e.g., update batch metadata). <br> 5. Verify the original signature is now invalidated for the modified record: <code>sporedb sign verify --batch "OQ-Sig-Test"</code> -- should report signature mismatch or require re-signing.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Signature includes record hash. After record modification, the original signature does not validate against the new record state. Signature cannot be detached and reattached to a different record.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-014-two-component-e-signature">OQ-014: Two-Component E-Signature<a class="headerlink" href="#oq-014-two-component-e-signature" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-014</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that electronic signatures employ at least two distinct identification components (user ID + password) per 21 CFR Part 11 Section 11.200.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Attempt to sign with user ID only (no password): expect rejection. <br> 2. Attempt to sign with password only (no user ID / not authenticated): expect rejection. <br> 3. Sign with both user ID (authenticated session) + password (re-entry): expect success. <br> 4. Verify the signed record audit entry contains both components: user_id is recorded, and the signature creation required password re-verification.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Both identification components (user ID and password) are required for signing. Single-component attempts are rejected.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="44-data-integrity-tests">4.4 Data Integrity Tests<a class="headerlink" href="#44-data-integrity-tests" title="Permanent link">&para;</a></h3>
+<h4 id="oq-015-import-data-matches-source-bit-for-bit">OQ-015: Import Data Matches Source Bit-for-Bit<a class="headerlink" href="#oq-015-import-data-matches-source-bit-for-bit" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-015</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that imported CSV data matches the source file with exact numerical precision.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Compute SHA-256 checksum of source CSV data columns: <code>sha256sum test_data.csv</code> <br> 2. Import: <code>sporedb import csv test_data.csv --batch "OQ-Integrity-Test"</code> <br> 3. Export the batch: <code>sporedb export csv "OQ-Integrity-Test" --output oq015_export.csv</code> <br> 4. Compare numerical values column by column using pandas: <code>pd.testing.assert_frame_equal(source_df, export_df, check_dtype=False, atol=1e-10)</code> <br> 5. Specifically verify: dissolved_oxygen, pH, temperature, biomass columns match to full float64 precision.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All numerical values match within floating-point tolerance (1e-10). No data loss or rounding beyond source precision.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-016-timestamp-normalization-to-utc">OQ-016: Timestamp Normalization to UTC<a class="headerlink" href="#oq-016-timestamp-normalization-to-utc" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-016</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that all timestamps are correctly normalized to UTC, regardless of the source timezone.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Prepare a CSV with timestamps in a non-UTC timezone (e.g., IST = UTC+5:30): <code>2025-01-15T10:00:00+05:30</code> <br> 2. Import the CSV: <code>sporedb import csv tz_test.csv --batch "OQ-TZ-Test"</code> <br> 3. Query the imported data and inspect the timestamp column. <br> 4. Verify: <code>2025-01-15T10:00:00+05:30</code> is stored as <code>2025-01-15T04:30:00Z</code> (UTC). <br> 5. Verify all exported timestamps include timezone indicator (Z suffix or +00:00).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All timestamps converted to UTC. No naive (timezone-unaware) timestamps stored. Time values are mathematically correct after conversion.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-017-unit-conversion-accuracy">OQ-017: Unit Conversion Accuracy<a class="headerlink" href="#oq-017-unit-conversion-accuracy" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-017</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that unit conversions during data import are numerically accurate.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Prepare a CSV with known unit values: biomass = 5.0 g/L, dissolved_oxygen = 40 % sat. <br> 2. Import with a mapping that converts g/L to mg/mL: <code>sporedb import csv units_test.csv --batch "OQ-Units-Test" --mapping units_mapping.yml</code> <br> 3. Query the imported value for biomass. <br> 4. Verify: 5.0 g/L = 5.0 mg/mL (1:1 conversion). <br> 5. Test a non-trivial conversion if configured (e.g., temperature Fahrenheit to Celsius): 98.6F = 37.0C.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Converted values match expected results to full float64 precision. No off-by-one or scaling errors.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-018-batch-metadata-persistence-across-sessions">OQ-018: Batch Metadata Persistence Across Sessions<a class="headerlink" href="#oq-018-batch-metadata-persistence-across-sessions" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-018</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that batch metadata persists correctly across application restarts.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Create a batch with full metadata: <code>sporedb batch create "OQ-Persist-Test" --organism "S. cerevisiae" --reactor "BR-05" --volume 50 --notes "OQ persistence test"</code> <br> 2. Record all metadata fields. <br> 3. Restart the SporeDB container: <code>docker compose restart sporedb</code> <br> 4. Wait for health check to pass. <br> 5. Retrieve the batch: <code>sporedb batch get "OQ-Persist-Test"</code> <br> 6. Compare all metadata fields with values from step 2.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All metadata fields match exactly after container restart. No data loss or truncation.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="45-batch-management-tests">4.5 Batch Management Tests<a class="headerlink" href="#45-batch-management-tests" title="Permanent link">&para;</a></h3>
+<h4 id="oq-019-create-batch-with-full-metadata">OQ-019: Create Batch with Full Metadata<a class="headerlink" href="#oq-019-create-batch-with-full-metadata" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-019</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that a batch can be created with all supported metadata fields.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Create a batch with all fields: name, organism, reactor, volume, media, temperature setpoint, pH setpoint, inoculation time, notes. <br> 2. Retrieve the batch and verify all fields are stored correctly. <br> 3. Verify an audit trail entry was created for the batch creation.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Batch is created with all metadata fields populated. All values retrievable and matching input. Audit entry records the creation.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-020-search-and-filter-batches">OQ-020: Search and Filter Batches<a class="headerlink" href="#oq-020-search-and-filter-batches" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-020</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that batches can be searched and filtered by date range, organism, and other metadata fields.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Ensure at least 5 batches exist with varying organisms and creation dates. <br> 2. Filter by organism: <code>sporedb batch list --organism "E. coli"</code> -- expect only E. coli batches. <br> 3. Filter by date range: <code>sporedb batch list --after 2025-01-01 --before 2025-12-31</code> <br> 4. Filter by reactor: <code>sporedb batch list --reactor "BR-01"</code> <br> 5. Combine filters: <code>sporedb batch list --organism "E. coli" --reactor "BR-01"</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Each filter returns only matching batches. Combined filters apply AND logic. Empty result sets return cleanly (no errors).</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-021-delete-batch-cascades">OQ-021: Delete Batch Cascades<a class="headerlink" href="#oq-021-delete-batch-cascades" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-021</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that deleting a batch also removes associated telemetry data, and that the deletion is recorded in the audit trail.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Create a test batch and import telemetry data. <br> 2. Record the batch ID and telemetry row count. <br> 3. Delete the batch: <code>sporedb batch delete "OQ-Delete-Test" --confirm</code> <br> 4. Verify batch is no longer listed: <code>sporedb batch list</code> <br> 5. Verify telemetry data is removed (query returns empty or error). <br> 6. Verify audit trail contains a "delete" entry for the batch. <br> 7. Verify the audit trail entries for the deleted batch's creation and data imports are NOT deleted (audit trail is immutable).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Batch and telemetry data are removed. Audit trail records the deletion. Historical audit entries (creation, imports) for the batch remain intact.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-21-cfr-part-11-specific-tests">5. 21 CFR Part 11 Specific Tests<a class="headerlink" href="#5-21-cfr-part-11-specific-tests" title="Permanent link">&para;</a></h2>
+<p>These test cases map directly to specific sections of FDA 21 CFR Part 11.</p>
+<h4 id="oq-cfr-001-1110a-system-validation">OQ-CFR-001: 11.10(a) -- System Validation<a class="headerlink" href="#oq-cfr-001-1110a-system-validation" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-001</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(a)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Validation of systems to ensure accuracy, reliability, consistent intended performance, and the ability to discern invalid or altered records.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the IQ/OQ/PQ execution itself constitutes system validation evidence.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Confirm IQ protocol (IQ-SPOREDB-001) has been executed and approved. <br> 2. Confirm this OQ protocol is being executed per procedure. <br> 3. Confirm PQ protocol (PQ-SPOREDB-001) is planned for execution after OQ. <br> 4. Verify all test results are documented with tester identity, date, and pass/fail. <br> 5. Verify the RTM (RTM-SPOREDB-001) links this requirement to validation evidence.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>IQ/OQ/PQ execution provides documented validation evidence. All results are traceable via RTM.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-002-1110b-accurate-and-complete-copies">OQ-CFR-002: 11.10(b) -- Accurate and Complete Copies<a class="headerlink" href="#oq-cfr-002-1110b-accurate-and-complete-copies" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-002</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(b)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>The ability to generate accurate and complete copies of records in both human-readable and electronic form suitable for inspection.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that batch data and audit trail can be exported in human-readable (CSV, JSON) and electronic (Parquet) formats with full fidelity.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Export a batch to CSV: <code>sporedb export csv "OQ-Test-Batch-001" --output oq_cfr002.csv</code> <br> 2. Export the same batch to Parquet: <code>sporedb export parquet "OQ-Test-Batch-001" --output oq_cfr002.parquet</code> <br> 3. Export the audit trail to JSON: <code>sporedb audit export --format json --output oq_cfr002_audit.json</code> <br> 4. Verify CSV is human-readable (open in text editor). <br> 5. Verify Parquet contains identical data to CSV (load both, compare). <br> 6. Verify JSON audit trail is human-readable and contains all entries.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All export formats contain complete, accurate data. CSV and JSON are human-readable. Parquet contains bit-identical numerical data.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-003-1110c-record-protection">OQ-CFR-003: 11.10(c) -- Record Protection<a class="headerlink" href="#oq-cfr-003-1110c-record-protection" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-003</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(c)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Protection of records to enable their accurate and ready retrieval throughout the records retention period.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that data survives container restarts and that Parquet files on MinIO remain accessible.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Create a batch and import data. Record batch ID and row count. <br> 2. Restart all containers: <code>docker compose restart</code> <br> 3. Wait for all health checks to pass. <br> 4. Retrieve the batch and verify data is intact. <br> 5. Verify audit trail entries from before restart are still present. <br> 6. Verify MinIO objects are present: <code>mc ls local/sporedb-data/</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All data survives restart. Batch data, metadata, and audit trail are fully retrievable. MinIO objects are intact.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-004-1110d-limiting-system-access">OQ-CFR-004: 11.10(d) -- Limiting System Access<a class="headerlink" href="#oq-cfr-004-1110d-limiting-system-access" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-004</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(d)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Limiting system access to authorized individuals.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify RBAC enforcement restricts access by role. Cross-references OQ-006 through OQ-010.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify test results of OQ-006 (admin operations). <br> 2. Verify test results of OQ-007 (editor restrictions). <br> 3. Verify test results of OQ-008 (viewer read-only). <br> 4. Verify test results of OQ-009 (unauthenticated denial). <br> 5. Verify test results of OQ-010 (immediate role change enforcement).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All referenced RBAC test cases (OQ-006 through OQ-010) passed. System access is limited to authorized individuals based on assigned roles.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-005-1110e-audit-trails">OQ-CFR-005: 11.10(e) -- Audit Trails<a class="headerlink" href="#oq-cfr-005-1110e-audit-trails" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-005</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(e)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Use of secure, computer-generated, time-stamped audit trails to independently record the date and time of operator entries and actions. Audit trail documentation must be retained for a period at least as long as required for the subject electronic records.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify tamper-evident audit trail with cryptographic integrity. Cross-references OQ-001 through OQ-005.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify test results of OQ-001 (signed audit entries). <br> 2. Verify test results of OQ-002 (hash chain integrity). <br> 3. Verify test results of OQ-003 (Merkle tree checkpoints). <br> 4. Verify test results of OQ-004 (audit trail export completeness). <br> 5. Verify test results of OQ-005 (tamper detection).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All referenced audit trail test cases (OQ-001 through OQ-005) passed. Audit trail is secure, computer-generated, time-stamped, and tamper-evident.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-006-1110k1-authority-checks">OQ-CFR-006: 11.10(k)(1) -- Authority Checks<a class="headerlink" href="#oq-cfr-006-1110k1-authority-checks" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-006</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(k)(1)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Use of authority checks to ensure that only authorized individuals can use the system, electronically sign a record, access the operation or computer system input device, alter a record, or perform the operation at hand.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that only authorized users can perform signing operations.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Authenticate as oq-viewer (lowest privilege). <br> 2. Attempt to sign a record: <code>sporedb sign --batch "OQ-Test-Batch-001" --meaning "approved" --password &lt;password&gt;</code> -- expect rejection (viewer cannot sign). <br> 3. Authenticate as oq-editor. <br> 4. Sign the record -- expect success (editor has signing authority). <br> 5. Verify audit trail records who signed and that the viewer's attempt was logged as denied.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Viewer signing attempt is rejected. Editor signing succeeds. Both events are audit-logged.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-007-1110k2-device-checks">OQ-CFR-007: 11.10(k)(2) -- Device Checks<a class="headerlink" href="#oq-cfr-007-1110k2-device-checks" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-007</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.10(k)(2)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Use of device (e.g., terminal) checks to determine the validity and integrity of data input and operational instructions.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the system clock is NTP-synchronized (cross-reference IQ-010) and that input validation rejects malformed data.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify IQ-010 (NTP sync) test result from IQ protocol. <br> 2. Submit an API request with an invalid timestamp format: <code>{"timestamp": "not-a-date"}</code> -- expect validation error. <br> 3. Submit an API request with an out-of-range value: <code>{"dissolved_oxygen": -999}</code> -- expect validation warning or acceptance with flag. <br> 4. Verify that all validation errors are logged.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>NTP sync confirmed (IQ-010). Invalid data inputs are rejected with descriptive error messages. Validation failures are audit-logged.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-008-1150-signature-manifestations">OQ-CFR-008: 11.50 -- Signature Manifestations<a class="headerlink" href="#oq-cfr-008-1150-signature-manifestations" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-008</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.50</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Signed electronic records shall contain information associated with the signing that clearly indicates: (a) the printed name of the signer; (b) the date and time when the signature was executed; (c) the meaning associated with the signature.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Cross-references OQ-012. Verify signed records display all three manifestation components.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify test results of OQ-012 (signature manifestations). <br> 2. Additionally, retrieve a signed record via API and verify JSON response includes: <code>signer_name</code>, <code>signed_at</code> (ISO 8601 UTC), <code>meaning</code> (approved/reviewed/verified/released/rejected).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All three signature manifestation components are present in every signed record. Values are human-readable.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-009-1170-signaturerecord-linking">OQ-CFR-009: 11.70 -- Signature/Record Linking<a class="headerlink" href="#oq-cfr-009-1170-signaturerecord-linking" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-009</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.70</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Electronic signatures and handwritten signatures executed to electronic records shall be linked to their respective electronic records to ensure that the signatures cannot be excised, copied, or otherwise transferred to falsify an electronic record.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Cross-references OQ-013. Verify cryptographic binding prevents signature excision or transfer.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify test results of OQ-013 (permanent signature-record linking). <br> 2. Additionally, attempt to copy a signature from one record to another via direct database manipulation and verify the compliance validator detects the invalid binding.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Signatures are cryptographically bound to records. Transfer or excision is detectable.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-010-11100-general-e-signature-requirements">OQ-CFR-010: 11.100 -- General E-Signature Requirements<a class="headerlink" href="#oq-cfr-010-11100-general-e-signature-requirements" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-010</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.100</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Each electronic signature shall be unique to one individual and shall not be reused by, or reassigned to, anyone else.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that user accounts are unique and cannot be shared or reassigned.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Attempt to create a user with a duplicate username: <code>sporedb admin create-user --username oq-editor --role viewer --password &lt;password&gt;</code> -- expect rejection (username already exists). <br> 2. Verify user_id is a unique identifier in the database. <br> 3. Verify that deleting and re-creating a user with the same username produces a different internal user_id (no ID reuse).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Duplicate usernames are rejected. User IDs are unique and not reused. Each signature is attributable to exactly one individual.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-cfr-011-11200-e-signature-components-and-controls">OQ-CFR-011: 11.200 -- E-Signature Components and Controls<a class="headerlink" href="#oq-cfr-011-11200-e-signature-components-and-controls" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-CFR-011</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>21 CFR Part 11, Section 11.200</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Electronic signatures that are not based upon biometrics shall employ at least two distinct identification components such as an identification code and a password.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Cross-references OQ-014. Verify two-component authentication for signing.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify test results of OQ-014 (two-component e-signature). <br> 2. Verify the system documentation states the two components: user ID (identification code) and password. <br> 3. Verify there is no bypass mechanism that allows single-factor signing.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Two distinct identification components are required for every electronic signature execution. No bypass exists.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-eu-annex-11-specific-tests">6. EU Annex 11 Specific Tests<a class="headerlink" href="#6-eu-annex-11-specific-tests" title="Permanent link">&para;</a></h2>
+<p>These test cases address EU Annex 11 requirements for computerised systems in GMP environments.</p>
+<h4 id="oq-ax-001-data-storage-and-backup">OQ-AX-001: Data Storage and Backup<a class="headerlink" href="#oq-ax-001-data-storage-and-backup" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-AX-001</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>EU Annex 11, Clause 7 (Data Storage)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Data should be secured by both physical and electronic means against damage. Stored data should be checked for accessibility, readability, and accuracy. Access to data should be ensured throughout the retention period.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that stored data is persistent, accessible, and protected against corruption.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify data persists across container restarts (cross-reference OQ-CFR-003). <br> 2. Verify Parquet files on MinIO are readable: <code>sporedb query "SELECT count(*) FROM 'OQ-Test-Batch-001'"</code> <br> 3. Verify PostgreSQL metadata is accessible after restart. <br> 4. Verify backup procedures are documented (reference PQ-006 for backup/restore validation).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Data persists, is readable, and is accessible after restart. Backup procedures are documented and validated.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-ax-002-audit-trail-completeness">OQ-AX-002: Audit Trail Completeness<a class="headerlink" href="#oq-ax-002-audit-trail-completeness" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-AX-002</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>EU Annex 11, Clause 9 (Audit Trail)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Consideration should be given to building into computerised systems the creation of a record of all GMP-relevant changes and deletions (a system-generated "audit trail"). For change to GMP-relevant data, the reason should be documented.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that every create, update, and delete operation on GMP-relevant data produces an audit trail entry.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Count audit entries before operations. <br> 2. Perform one create (batch create), one update (metadata change), and one delete (batch delete). <br> 3. Count audit entries after operations. <br> 4. Verify the count increased by exactly 3. <br> 5. Verify each new entry has: action type (create/update/delete), entity_type, entity_id, user_id, timestamp, and reason (for update/delete).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Every GMP-relevant operation produces exactly one audit entry. Update and delete entries include a reason field.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-ax-003-electronic-signature-equivalence">OQ-AX-003: Electronic Signature Equivalence<a class="headerlink" href="#oq-ax-003-electronic-signature-equivalence" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-AX-003</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>EU Annex 11, Clause 14 (Electronic Signatures)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Electronic records may be signed electronically. Electronic signatures are expected to have the same impact as hand-written signatures within the boundaries of the company.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that electronic signatures include all elements necessary for regulatory equivalence with handwritten signatures.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Sign a record and retrieve the signature details. <br> 2. Verify the signature contains: full name (equivalent to printed name on paper), date/time (equivalent to handwritten date), meaning/purpose (equivalent to signing context), cryptographic proof of authenticity (equivalent to unique handwriting). <br> 3. Verify the signature is immutable (cannot be altered after creation).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Electronic signature contains all elements equivalent to a handwritten signature. Signature is immutable and cryptographically verifiable.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-ax-004-access-control-effectiveness">OQ-AX-004: Access Control Effectiveness<a class="headerlink" href="#oq-ax-004-access-control-effectiveness" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-AX-004</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>EU Annex 11, Clause 12.1 (Security)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Physical and/or logical controls should be in place to restrict access to computerised systems to authorised persons. Suitable methods of preventing unauthorised entry to the system include the use of keys, pass cards, personal codes with passwords, biometrics, and restricted access to computer equipment and data storage areas.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that RBAC prevents unauthorized access at all API endpoints. Cross-references OQ-006 through OQ-010.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify all RBAC test cases passed (OQ-006 through OQ-010). <br> 2. Verify password complexity requirements are enforced (minimum length, character requirements). <br> 3. Verify failed login attempts are logged in the audit trail. <br> 4. Verify account lockout or rate limiting after repeated failed attempts (if implemented).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>RBAC enforced at all endpoints. Password requirements are enforced. Failed login attempts are logged.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-ax-005-data-integrity-during-transfer">OQ-AX-005: Data Integrity During Transfer<a class="headerlink" href="#oq-ax-005-data-integrity-during-transfer" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-AX-005</td>
+</tr>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>EU Annex 11, Clause 7 (Data Storage) and Clause 12.1 (Security)</td>
+</tr>
+<tr>
+<td><strong>Requirement</strong></td>
+<td>Data should be secured against damage during transfer. Data integrity checks should be built in during data transfer.</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that data import and export operations include integrity verification (checksum comparison).</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Import a CSV file and record the import checksum reported by SporeDB. <br> 2. Compute the SHA-256 checksum of the source CSV independently. <br> 3. Verify checksums match. <br> 4. Export the data and compute checksum of exported file. <br> 5. Re-import the exported file and verify data integrity is maintained.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Import and export checksums match source data. No data corruption during transfer. Integrity is verifiable at every stage.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-boundary-and-negative-tests">7. Boundary and Negative Tests<a class="headerlink" href="#7-boundary-and-negative-tests" title="Permanent link">&para;</a></h2>
+<h4 id="oq-neg-001-invalid-credentials-rejected">OQ-NEG-001: Invalid Credentials Rejected<a class="headerlink" href="#oq-neg-001-invalid-credentials-rejected" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-NEG-001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that login attempts with invalid credentials are rejected and logged.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Attempt login with valid username, wrong password. <br> 2. Attempt login with nonexistent username. <br> 3. Attempt login with empty credentials. <br> 4. Verify all attempts return 401 Unauthorized. <br> 5. Verify all failed attempts are recorded in the audit trail (or security log).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All invalid credential attempts rejected with 401. No information leakage (same error message for all failure types). Failed attempts logged.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-neg-002-malformed-csv-import-fails-gracefully">OQ-NEG-002: Malformed CSV Import Fails Gracefully<a class="headerlink" href="#oq-neg-002-malformed-csv-import-fails-gracefully" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-NEG-002</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that importing a malformed CSV file produces a clear error message without crashing the system or corrupting existing data.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Prepare a malformed CSV: missing headers, inconsistent column counts, binary data in text fields. <br> 2. Attempt import: <code>sporedb import csv malformed.csv --batch "OQ-Bad-Import"</code> <br> 3. Verify the command returns a descriptive error (not a stack trace). <br> 4. Verify no partial batch was created. <br> 5. Verify existing data is unaffected: <code>sporedb batch list</code> still shows previous batches. <br> 6. Verify the system remains responsive: <code>curl http://localhost:8000/health</code> returns 200.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Import fails with a user-friendly error message. No partial data created. Existing data intact. System remains healthy.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-neg-003-empty-batch-name-rejected">OQ-NEG-003: Empty Batch Name Rejected<a class="headerlink" href="#oq-neg-003-empty-batch-name-rejected" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-NEG-003</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that creating a batch with an empty or whitespace-only name is rejected with a validation error.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Attempt: <code>sporedb batch create ""</code> -- expect validation error. <br> 2. Attempt: <code>sporedb batch create "   "</code> (whitespace only) -- expect validation error. <br> 3. Attempt via API: <code>POST /api/batches {"name": ""}</code> -- expect 422 Unprocessable Entity. <br> 4. Verify no batch is created in any case.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All attempts rejected with validation error (422 or similar). Error message indicates that batch name is required and cannot be empty.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h4 id="oq-neg-004-concurrent-writes-to-same-batch-handled-safely">OQ-NEG-004: Concurrent Writes to Same Batch Handled Safely<a class="headerlink" href="#oq-neg-004-concurrent-writes-to-same-batch-handled-safely" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>OQ-NEG-004</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that concurrent write operations to the same batch do not cause data corruption, deadlocks, or lost updates.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Create a test batch. <br> 2. From two concurrent sessions (different terminals or API clients), simultaneously: <br> &nbsp;&nbsp;&nbsp;a. Session A: import a CSV file into the batch. <br> &nbsp;&nbsp;&nbsp;b. Session B: update the batch metadata. <br> 3. Wait for both operations to complete. <br> 4. Verify no deadlock occurred (both operations completed within timeout). <br> 5. Verify data integrity: query the batch and confirm both the imported data and updated metadata are present. <br> 6. Verify audit trail has entries for both operations with correct timestamps and user IDs.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Both operations complete without deadlock. Data integrity is maintained. Audit trail captures both operations.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-deviations">8. Deviations<a class="headerlink" href="#8-deviations" title="Permanent link">&para;</a></h2>
+<p>Record any deviations from expected results during OQ execution. All deviations must be documented, assessed for impact, and resolved before proceeding to PQ.</p>
+<table>
+<thead>
+<tr>
+<th>Deviation #</th>
+<th>Test Case</th>
+<th>Description</th>
+<th>Impact Assessment</th>
+<th>Resolution</th>
+<th>Resolved By</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-summary-of-results">9. Summary of Results<a class="headerlink" href="#9-summary-of-results" title="Permanent link">&para;</a></h2>
+<h3 id="by-feature-area">By Feature Area<a class="headerlink" href="#by-feature-area" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature Area</th>
+<th>Test Cases</th>
+<th>Passed</th>
+<th>Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audit Trail (OQ-001 to OQ-005)</td>
+<td>5</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>RBAC (OQ-006 to OQ-010)</td>
+<td>5</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Electronic Signatures (OQ-011 to OQ-014)</td>
+<td>4</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Data Integrity (OQ-015 to OQ-018)</td>
+<td>4</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Batch Management (OQ-019 to OQ-021)</td>
+<td>3</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>21 CFR Part 11 (OQ-CFR-001 to OQ-CFR-011)</td>
+<td>11</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>EU Annex 11 (OQ-AX-001 to OQ-AX-005)</td>
+<td>5</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Boundary/Negative (OQ-NEG-001 to OQ-NEG-004)</td>
+<td>4</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>TOTAL</strong></td>
+<td><strong>41</strong></td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h3 id="overall">Overall<a class="headerlink" href="#overall" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total Test Cases</td>
+<td>41</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Deviations Recorded</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Deviations Resolved</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-conclusion">10. Conclusion<a class="headerlink" href="#10-conclusion" title="Permanent link">&para;</a></h2>
+<p>Based on the results documented in this protocol:</p>
+<ul>
+<li>[ ] All OQ tests PASSED -- the system is qualified for Performance Qualification (PQ).</li>
+<li>[ ] One or more tests FAILED -- deviations have been recorded and resolved. The system is qualified for PQ upon deviation closure.</li>
+<li>[ ] One or more tests FAILED -- unresolved deviations prevent progression to PQ. Corrective actions and re-execution of failed tests are required.</li>
+</ul>
+<p><strong>Comments:</strong></p>
+<hr />
+<hr />
+<h2 id="11-approval-signatures">11. Approval Signatures<a class="headerlink" href="#11-approval-signatures" title="Permanent link">&para;</a></h2>
+<p>By signing below, I confirm that I have reviewed the results of this Operational Qualification protocol and that the conclusions are accurate and supported by the documented evidence.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Name</th>
+<th>Signature</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>QA Reviewer</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>System Administrator</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Quality Head</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-a-reference-documents">Appendix A: Reference Documents<a class="headerlink" href="#appendix-a-reference-documents" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>ID</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IQ Protocol</td>
+<td>IQ-SPOREDB-001</td>
+<td>Installation Qualification protocol for SporeDB</td>
+</tr>
+<tr>
+<td>PQ Protocol</td>
+<td>PQ-SPOREDB-001</td>
+<td>Performance Qualification protocol for SporeDB</td>
+</tr>
+<tr>
+<td>Traceability Matrix</td>
+<td>RTM-SPOREDB-001</td>
+<td>Requirements Traceability Matrix</td>
+</tr>
+<tr>
+<td>21 CFR Part 11</td>
+<td>FDA</td>
+<td>Electronic Records; Electronic Signatures</td>
+</tr>
+<tr>
+<td>EU Annex 11</td>
+<td>EMA</td>
+<td>Computerised Systems (2011, with 2025 draft provisions)</td>
+</tr>
+<tr>
+<td>GAMP 5</td>
+<td>ISPE</td>
+<td>A Risk-Based Approach to Compliant GxP Computerized Systems</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-b-test-user-accounts">Appendix B: Test User Accounts<a class="headerlink" href="#appendix-b-test-user-accounts" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Username</th>
+<th>Full Name</th>
+<th>Role</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>oq-admin</td>
+<td>OQ Admin User</td>
+<td>Admin</td>
+<td>Administrative operations and user management</td>
+</tr>
+<tr>
+<td>oq-editor</td>
+<td>OQ Editor User</td>
+<td>Editor</td>
+<td>Data entry, batch management, signing</td>
+</tr>
+<tr>
+<td>oq-viewer</td>
+<td>OQ Viewer User</td>
+<td>Viewer</td>
+<td>Read-only access verification</td>
+</tr>
+<tr>
+<td>oq-role-test</td>
+<td>OQ Role Test User</td>
+<td>Variable</td>
+<td>Role change testing (OQ-010)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-c-version-history">Appendix C: Version History<a class="headerlink" href="#appendix-c-version-history" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>Initial OQ protocol</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

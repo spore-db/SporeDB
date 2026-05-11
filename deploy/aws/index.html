@@ -1,0 +1,2020 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Bioprocess-native time-series database">
+      
+      
+      
+        <link rel="canonical" href="https://spore-db.github.io/SporeDB/deploy/aws/">
+      
+      
+        <link rel="prev" href="../fly-io/">
+      
+      
+        <link rel="next" href="../digitalocean/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>AWS ECS/Fargate - SporeDB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploy-sporedb-on-aws-ecsfargate" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SporeDB" class="md-header__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SporeDB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AWS ECS/Fargate
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../deployment/selfhosted/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SporeDB" class="md-nav__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SporeDB
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/selfhosted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Hosted
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../railway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Railway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../render/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fly-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fly.io
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS ECS/Fargate
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS ECS/Fargate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-an-s3-bucket" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create an S3 Bucket
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-an-rds-postgresql-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Create an RDS PostgreSQL Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-generate-ed25519-signing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Generate Ed25519 Signing Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-store-secrets-in-aws-secrets-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Store Secrets in AWS Secrets Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-create-an-iam-execution-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Create an IAM Execution Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-an-ecs-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Create an ECS Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-create-a-cloudwatch-log-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Create a CloudWatch Log Group
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-register-the-task-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Register the Task Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-create-the-ecs-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Create the ECS Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-verify-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Verify the Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-provisioned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Provisioned
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-string-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection String Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ed25519-key-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ed25519 Key Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Sizing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-fails-to-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task fails to start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health-check-failing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health check failing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-connection-timeout-or-rfc1738-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database connection timeout or rfc1738 error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filenotfounderror-for-keys-500-on-auth-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FileNotFoundError for keys / 500 on auth endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../digitalocean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DigitalOcean
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/sporedb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SporeDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-an-s3-bucket" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create an S3 Bucket
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-an-rds-postgresql-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Create an RDS PostgreSQL Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-generate-ed25519-signing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Generate Ed25519 Signing Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-store-secrets-in-aws-secrets-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Store Secrets in AWS Secrets Manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-create-an-iam-execution-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Create an IAM Execution Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-create-an-ecs-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Create an ECS Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-create-a-cloudwatch-log-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Create a CloudWatch Log Group
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-register-the-task-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Register the Task Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-create-the-ecs-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Create the ECS Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-verify-the-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Verify the Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-provisioned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Provisioned
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-string-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection String Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ed25519-key-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ed25519 Key Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Sizing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#task-fails-to-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task fails to start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health-check-failing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health check failing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-connection-timeout-or-rfc1738-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database connection timeout or rfc1738 error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filenotfounderror-for-keys-500-on-auth-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FileNotFoundError for keys / 500 on auth endpoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="deploy-sporedb-on-aws-ecsfargate">Deploy SporeDB on AWS (ECS/Fargate)<a class="headerlink" href="#deploy-sporedb-on-aws-ecsfargate" title="Permanent link">&para;</a></h1>
+<p>Deploy SporeDB on AWS using ECS/Fargate with RDS PostgreSQL and S3.
+This guide walks through the AWS Console and CLI step by step -- estimated
+time: 20 minutes.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS account</td>
+<td>With admin or IAM permissions to create ECS, RDS, S3, Secrets Manager, and CloudWatch resources</td>
+</tr>
+<tr>
+<td>AWS CLI v2</td>
+<td>Installed and configured (<code>aws configure</code>)</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>Installed locally (to verify the image, optional)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<p>This guide creates the following AWS resources:</p>
+<ul>
+<li><strong>ECS Cluster</strong> with a Fargate service running SporeDB</li>
+<li><strong>RDS PostgreSQL 16</strong> instance for metadata storage</li>
+<li><strong>S3 Bucket</strong> for Parquet data files</li>
+<li><strong>Secrets Manager</strong> entries for database URL, S3 keys, and Ed25519 signing keys</li>
+<li><strong>CloudWatch Log Group</strong> for container logs</li>
+</ul>
+<p>Follow the step-by-step sections below to provision each resource.</p>
+<h2 id="step-by-step-setup">Step-by-Step Setup<a class="headerlink" href="#step-by-step-setup" title="Permanent link">&para;</a></h2>
+<h3 id="1-create-an-s3-bucket">1. Create an S3 Bucket<a class="headerlink" href="#1-create-an-s3-bucket" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>aws<span class="w"> </span>s3<span class="w"> </span>mb<span class="w"> </span>s3://sporedb-data<span class="w"> </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<p>This bucket stores Parquet files for batch time-series data.</p>
+<h3 id="2-create-an-rds-postgresql-instance">2. Create an RDS PostgreSQL Instance<a class="headerlink" href="#2-create-an-rds-postgresql-instance" title="Permanent link">&para;</a></h3>
+<p><strong>Via CLI:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>aws<span class="w"> </span>rds<span class="w"> </span>create-db-instance<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--db-instance-identifier<span class="w"> </span>sporedb-db<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--db-instance-class<span class="w"> </span>db.t4g.micro<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--engine<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--engine-version<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--master-username<span class="w"> </span>sporedb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--master-user-password<span class="w"> </span>YOUR_PASSWORD_HERE<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>--allocated-storage<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>--no-publicly-accessible<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<blockquote>
+<p><strong>Security Warning:</strong> For production deployments handling audit trail data
+(FDA 21 CFR Part 11), do <strong>NOT</strong> use <code>--publicly-accessible</code>. The command
+above uses <code>--no-publicly-accessible</code> (the recommended default), which keeps
+the RDS instance accessible only from within the VPC. Allow inbound access on
+port 5432 only from the ECS task security group.</p>
+</blockquote>
+<p><strong>Via Console:</strong> Go to <strong>RDS &gt; Create database &gt; PostgreSQL 16 &gt; db.t4g.micro</strong>.
+Set the master username to <code>sporedb</code>, choose a strong password, and note the
+endpoint after creation (e.g., <code>sporedb-db.xxxx.us-east-1.rds.amazonaws.com</code>).</p>
+<p>Wait for the instance to become available:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>aws<span class="w"> </span>rds<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>db-instance-available<span class="w"> </span>--db-instance-identifier<span class="w"> </span>sporedb-db
+</code></pre></div>
+<h3 id="3-generate-ed25519-signing-keys">3. Generate Ed25519 Signing Keys<a class="headerlink" href="#3-generate-ed25519-signing-keys" title="Permanent link">&para;</a></h3>
+<p>SporeDB uses Ed25519 key pairs for JWT authentication and audit trail signing.
+Generate them locally:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>openssl<span class="w"> </span>genpkey<span class="w"> </span>-algorithm<span class="w"> </span>ed25519<span class="w"> </span>-out<span class="w"> </span>private.pem
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>openssl<span class="w"> </span>pkey<span class="w"> </span>-in<span class="w"> </span>private.pem<span class="w"> </span>-pubout<span class="w"> </span>-out<span class="w"> </span>public.pem
+</code></pre></div>
+<p>Base64-encode the keys for storage in Secrets Manager:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Use openssl base64 -A to produce single-line output (portable across macOS/Linux):</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">PRIVATE_KEY_B64</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>base64<span class="w"> </span>-A<span class="w"> </span>-in<span class="w"> </span>private.pem<span class="k">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nv">PUBLIC_KEY_B64</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>base64<span class="w"> </span>-A<span class="w"> </span>-in<span class="w"> </span>public.pem<span class="k">)</span>
+</code></pre></div>
+<h3 id="4-store-secrets-in-aws-secrets-manager">4. Store Secrets in AWS Secrets Manager<a class="headerlink" href="#4-store-secrets-in-aws-secrets-manager" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>WARNING:</strong> Use the <code>postgresql+asyncpg://</code> connection string prefix.
+Do NOT use <code>postgres://</code> or <code>postgresql://</code>. SporeDB passes the URL
+directly to SQLAlchemy's <code>create_async_engine</code> with no prefix normalization.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Database connection string</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>aws<span class="w"> </span>secretsmanager<span class="w"> </span>create-secret<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--name<span class="w"> </span>sporedb/database-url<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--secret-string<span class="w"> </span><span class="s2">&quot;postgresql+asyncpg://sporedb:YOUR_PASSWORD_HERE@sporedb-db.xxxx.us-east-1.rds.amazonaws.com:5432/sporedb&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># S3 access credentials</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>aws<span class="w"> </span>secretsmanager<span class="w"> </span>create-secret<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span>--name<span class="w"> </span>sporedb/s3-access-key<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span>--secret-string<span class="w"> </span><span class="s2">&quot;YOUR_AWS_ACCESS_KEY&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>aws<span class="w"> </span>secretsmanager<span class="w"> </span>create-secret<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">  </span>--name<span class="w"> </span>sporedb/s3-secret-key<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">  </span>--secret-string<span class="w"> </span><span class="s2">&quot;YOUR_AWS_SECRET_KEY&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="c1"># Ed25519 signing keys (base64-encoded)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>aws<span class="w"> </span>secretsmanager<span class="w"> </span>create-secret<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">  </span>--name<span class="w"> </span>sporedb/ed25519-private-key-b64<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">  </span>--secret-string<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PRIVATE_KEY_B64</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>aws<span class="w"> </span>secretsmanager<span class="w"> </span>create-secret<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">  </span>--name<span class="w"> </span>sporedb/ed25519-public-key-b64<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">  </span>--secret-string<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUBLIC_KEY_B64</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<h3 id="5-create-an-iam-execution-role">5. Create an IAM Execution Role<a class="headerlink" href="#5-create-an-iam-execution-role" title="Permanent link">&para;</a></h3>
+<p>The ECS task needs an execution role with permission to pull secrets:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Create the role (if it does not already exist)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>aws<span class="w"> </span>iam<span class="w"> </span>create-role<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>--role-name<span class="w"> </span>ecsTaskExecutionRole<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span>--assume-role-policy-document<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="s1">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="s1">    &quot;Statement&quot;: [{</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="s1">      &quot;Effect&quot;: &quot;Allow&quot;,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="s1">      &quot;Principal&quot;: {&quot;Service&quot;: &quot;ecs-tasks.amazonaws.com&quot;},</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="s1">      &quot;Action&quot;: &quot;sts:AssumeRole&quot;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="s1">    }]</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="s1">  }&#39;</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># Attach the managed ECS execution policy</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>aws<span class="w"> </span>iam<span class="w"> </span>attach-role-policy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span>--role-name<span class="w"> </span>ecsTaskExecutionRole<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">  </span>--policy-arn<span class="w"> </span>arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="c1"># Grant Secrets Manager read access</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># NOTE: Replace the wildcard (*) in the account ID position below with your</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="c1"># actual AWS account ID (e.g., 123456789012) to follow least-privilege.</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="c1"># The wildcard is used here as a placeholder for simplicity.</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>aws<span class="w"> </span>iam<span class="w"> </span>put-role-policy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">  </span>--role-name<span class="w"> </span>ecsTaskExecutionRole<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">  </span>--policy-name<span class="w"> </span>SporeDBSecretsAccess<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">  </span>--policy-document<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="s1">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="s1">    &quot;Statement&quot;: [{</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="s1">      &quot;Effect&quot;: &quot;Allow&quot;,</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="s1">      &quot;Action&quot;: &quot;secretsmanager:GetSecretValue&quot;,</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="s1">      &quot;Resource&quot;: &quot;arn:aws:secretsmanager:us-east-1:*:secret:sporedb/*&quot;</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="s1">    }]</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="s1">  }&#39;</span>
+</code></pre></div>
+<h3 id="6-create-an-ecs-cluster">6. Create an ECS Cluster<a class="headerlink" href="#6-create-an-ecs-cluster" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>aws<span class="w"> </span>ecs<span class="w"> </span>create-cluster<span class="w"> </span>--cluster-name<span class="w"> </span>sporedb<span class="w"> </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<h3 id="7-create-a-cloudwatch-log-group">7. Create a CloudWatch Log Group<a class="headerlink" href="#7-create-a-cloudwatch-log-group" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>aws<span class="w"> </span>logs<span class="w"> </span>create-log-group<span class="w"> </span>--log-group-name<span class="w"> </span>/ecs/sporedb<span class="w"> </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<h3 id="8-register-the-task-definition">8. Register the Task Definition<a class="headerlink" href="#8-register-the-task-definition" title="Permanent link">&para;</a></h3>
+<p>The included <a href="task-definition.json"><code>task-definition.json</code></a> configures a
+Fargate task with:</p>
+<ul>
+<li>SporeDB container image from GHCR</li>
+<li>Secrets Manager references for database URL, S3 keys, and Ed25519 keys</li>
+<li>A startup command that decodes base64-encoded Ed25519 keys to files before
+  launching uvicorn</li>
+<li>Health check on port 8000</li>
+<li>CloudWatch logging</li>
+</ul>
+<p>Before registering, update the placeholders in <code>task-definition.json</code>:</p>
+<ul>
+<li>Replace <code>ACCOUNT_ID</code> with your AWS account ID</li>
+<li>Replace <code>REGION</code> with your AWS region (e.g., <code>us-east-1</code>)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>aws<span class="w"> </span>ecs<span class="w"> </span>register-task-definition<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--cli-input-json<span class="w"> </span>file://docs/deploy/aws/task-definition.json<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<h3 id="9-create-the-ecs-service">9. Create the ECS Service<a class="headerlink" href="#9-create-the-ecs-service" title="Permanent link">&para;</a></h3>
+<p>Replace <code>subnet-xxx</code> and <code>sg-xxx</code> with your VPC subnet and security group IDs.
+The security group must allow inbound traffic on port 8000 and outbound to RDS
+(port 5432) and S3.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>aws<span class="w"> </span>ecs<span class="w"> </span>create-service<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--cluster<span class="w"> </span>sporedb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>--service-name<span class="w"> </span>sporedb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>--task-definition<span class="w"> </span>sporedb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span>--desired-count<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span>--launch-type<span class="w"> </span>FARGATE<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span>--network-configuration<span class="w"> </span><span class="s2">&quot;awsvpcConfiguration={subnets=[subnet-xxx],securityGroups=[sg-xxx],assignPublicIp=ENABLED}&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+<h3 id="10-verify-the-deployment">10. Verify the Deployment<a class="headerlink" href="#10-verify-the-deployment" title="Permanent link">&para;</a></h3>
+<p>Check that the service is running:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>aws<span class="w"> </span>ecs<span class="w"> </span>describe-services<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>--cluster<span class="w"> </span>sporedb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--services<span class="w"> </span>sporedb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">&#39;services[0].{status:status,running:runningCount,desired:desiredCount}&#39;</span>
+</code></pre></div>
+<p>Get the public IP of the running task:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">TASK_ARN</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecs<span class="w"> </span>list-tasks<span class="w"> </span>--cluster<span class="w"> </span>sporedb<span class="w"> </span>--service-name<span class="w"> </span>sporedb<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;taskArns[0]&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span>--region<span class="w"> </span>us-east-1<span class="k">)</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">ENI_ID</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ecs<span class="w"> </span>describe-tasks<span class="w"> </span>--cluster<span class="w"> </span>sporedb<span class="w"> </span>--tasks<span class="w"> </span><span class="nv">$TASK_ARN</span><span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;tasks[0].attachments[0].details[?name==`networkInterfaceId`].value&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span>--region<span class="w"> </span>us-east-1<span class="k">)</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nv">PUBLIC_IP</span><span class="o">=</span><span class="k">$(</span>aws<span class="w"> </span>ec2<span class="w"> </span>describe-network-interfaces<span class="w"> </span>--network-interface-ids<span class="w"> </span><span class="nv">$ENI_ID</span><span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;NetworkInterfaces[0].Association.PublicIp&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span>--region<span class="w"> </span>us-east-1<span class="k">)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;SporeDB is running at http://</span><span class="nv">$PUBLIC_IP</span><span class="s2">:8000&quot;</span>
+</code></pre></div>
+<p>Test the health endpoint:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>-f<span class="w"> </span>http://<span class="nv">$PUBLIC_IP</span>:8000/health
+</code></pre></div>
+<h2 id="what-gets-provisioned">What Gets Provisioned<a class="headerlink" href="#what-gets-provisioned" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ECS Fargate task</td>
+<td>0.5 vCPU, 1 GB RAM</td>
+</tr>
+<tr>
+<td>RDS PostgreSQL 16</td>
+<td>db.t4g.micro, 20 GB storage</td>
+</tr>
+<tr>
+<td>S3 bucket</td>
+<td>Standard storage class</td>
+</tr>
+<tr>
+<td>Secrets Manager</td>
+<td>5 secrets (DB URL, S3 keys, Ed25519 keys)</td>
+</tr>
+<tr>
+<td>CloudWatch log group</td>
+<td><code>/ecs/sporedb</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Source</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPOREDB_MODE</code></td>
+<td>Environment</td>
+<td><code>selfhosted</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_SERVER_PORT</code></td>
+<td>Environment</td>
+<td><code>8000</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_BUCKET</code></td>
+<td>Environment</td>
+<td><code>sporedb</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_JWT_SECRET_KEY_PATH</code></td>
+<td>Environment</td>
+<td><code>/home/sporedb/app/keys/cloud_private.pem</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_JWT_PUBLIC_KEY_PATH</code></td>
+<td>Environment</td>
+<td><code>/home/sporedb/app/keys/cloud_public.pem</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_DATABASE_URL</code></td>
+<td>Secrets Manager</td>
+<td>PostgreSQL connection string (<code>postgresql+asyncpg://...</code>)</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_ACCESS_KEY</code></td>
+<td>Secrets Manager</td>
+<td>S3 access key</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_SECRET_KEY</code></td>
+<td>Secrets Manager</td>
+<td>S3 secret key</td>
+</tr>
+<tr>
+<td><code>SPOREDB_ED25519_PRIVATE_KEY_B64</code></td>
+<td>Secrets Manager</td>
+<td>Base64-encoded Ed25519 private key</td>
+</tr>
+<tr>
+<td><code>SPOREDB_ED25519_PUBLIC_KEY_B64</code></td>
+<td>Secrets Manager</td>
+<td>Base64-encoded Ed25519 public key</td>
+</tr>
+</tbody>
+</table>
+<h3 id="connection-string-format">Connection String Format<a class="headerlink" href="#connection-string-format" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>WARNING:</strong> SporeDB requires <code>postgresql+asyncpg://</code> as the connection string
+prefix. Do NOT use <code>postgres://</code> or <code>postgresql://</code>. The URL is passed directly
+to SQLAlchemy's <code>create_async_engine</code> with no automatic prefix normalization.</p>
+<p><strong>Correct:</strong> <code>postgresql+asyncpg://sporedb:pass@host:5432/sporedb</code>
+<strong>Wrong:</strong> <code>postgres://sporedb:pass@host:5432/sporedb</code></p>
+</blockquote>
+<h2 id="ed25519-key-setup">Ed25519 Key Setup<a class="headerlink" href="#ed25519-key-setup" title="Permanent link">&para;</a></h2>
+<p>SporeDB loads Ed25519 signing keys from file paths only. On ECS/Fargate,
+container filesystems are ephemeral -- key files do not persist across task
+restarts. The task definition handles this with a startup command that:</p>
+<ol>
+<li>Reads <code>SPOREDB_ED25519_PRIVATE_KEY_B64</code> and <code>SPOREDB_ED25519_PUBLIC_KEY_B64</code>
+   from Secrets Manager (injected as environment variables)</li>
+<li>Decodes the base64 values to files at <code>/home/sporedb/app/keys/</code></li>
+<li>Sets <code>SPOREDB_JWT_SECRET_KEY_PATH</code> and <code>SPOREDB_JWT_PUBLIC_KEY_PATH</code> to
+   point to those files</li>
+<li>Launches uvicorn</li>
+</ol>
+<p>The <code>command</code> field in <code>task-definition.json</code> implements this pattern:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/sporedb/app/keys<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SPOREDB_ED25519_PRIVATE_KEY_B64</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>/home/sporedb/app/keys/cloud_private.pem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SPOREDB_ED25519_PUBLIC_KEY_B64</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>/home/sporedb/app/keys/cloud_public.pem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span>uvicorn<span class="w"> </span>sporedb.cloud.app:create_app<span class="w"> </span>--factory<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+</code></pre></div>
+<h2 id="cost-estimate">Cost Estimate<a class="headerlink" href="#cost-estimate" title="Permanent link">&para;</a></h2>
+<p>All prices are approximate monthly costs for US East (N. Virginia) region,
+running 24/7.</p>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>Fargate</th>
+<th>RDS Postgres</th>
+<th>S3</th>
+<th>Total/month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small (10 batches)</td>
+<td>~$10/mo (0.25 vCPU, 512MB)</td>
+<td>~$15/mo (db.t4g.micro)</td>
+<td>~$1/mo</td>
+<td>~$26/mo</td>
+</tr>
+<tr>
+<td>Medium (50 batches)</td>
+<td>~$19/mo (0.5 vCPU, 1GB)</td>
+<td>~$30/mo (db.t4g.small)</td>
+<td>~$2/mo</td>
+<td>~$51/mo</td>
+</tr>
+<tr>
+<td>Large (100+ batches)</td>
+<td>~$37/mo (1 vCPU, 2GB)</td>
+<td>~$65/mo (db.t4g.medium)</td>
+<td>~$5/mo</td>
+<td>~$107/mo</td>
+</tr>
+</tbody>
+</table>
+<p>Secrets Manager adds ~$2/mo for 5 secrets. CloudWatch Logs pricing depends on
+ingestion volume (typically under $1/mo for small workloads).</p>
+<h2 id="recommended-sizing">Recommended Sizing<a class="headerlink" href="#recommended-sizing" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>Fargate CPU</th>
+<th>Fargate RAM</th>
+<th>RDS Instance</th>
+<th>S3 Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small (10 batches)</td>
+<td>0.25 vCPU</td>
+<td>512 MB</td>
+<td>db.t4g.micro (20 GB)</td>
+<td>10 GB</td>
+</tr>
+<tr>
+<td>Medium (50 batches)</td>
+<td>0.5 vCPU</td>
+<td>1 GB</td>
+<td>db.t4g.small (50 GB)</td>
+<td>50 GB</td>
+</tr>
+<tr>
+<td>Large (100+ batches)</td>
+<td>1 vCPU</td>
+<td>2 GB</td>
+<td>db.t4g.medium (100 GB)</td>
+<td>100 GB</td>
+</tr>
+</tbody>
+</table>
+<p>To change Fargate sizing, update the <code>cpu</code> and <code>memory</code> fields in
+<code>task-definition.json</code> and re-register the task definition. To change the RDS
+instance class, modify it via the RDS console or CLI.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="task-fails-to-start">Task fails to start<a class="headerlink" href="#task-fails-to-start" title="Permanent link">&para;</a></h3>
+<p>Check CloudWatch logs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>aws<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>/ecs/sporedb<span class="w"> </span>--region<span class="w"> </span>us-east-1<span class="w"> </span>--follow
+</code></pre></div>
+<p>The most common cause is missing Secrets Manager permissions on
+<code>ecsTaskExecutionRole</code>. Verify the role has <code>secretsmanager:GetSecretValue</code>
+permission for <code>arn:aws:secretsmanager:us-east-1:*:secret:sporedb/*</code>.</p>
+<h3 id="health-check-failing">Health check failing<a class="headerlink" href="#health-check-failing" title="Permanent link">&para;</a></h3>
+<p>Verify the security group allows inbound traffic on port 8000. Also confirm
+the task is in a public subnet with <code>assignPublicIp=ENABLED</code> (or behind an
+ALB with proper target group configuration).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>aws<span class="w"> </span>ec2<span class="w"> </span>describe-security-groups<span class="w"> </span>--group-ids<span class="w"> </span>sg-xxx<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">&#39;SecurityGroups[0].IpPermissions&#39;</span>
+</code></pre></div>
+<h3 id="database-connection-timeout-or-rfc1738-error">Database connection timeout or rfc1738 error<a class="headerlink" href="#database-connection-timeout-or-rfc1738-error" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ensure <code>SPOREDB_DATABASE_URL</code> in Secrets Manager uses the
+  <code>postgresql+asyncpg://</code> prefix (not <code>postgres://</code>)</li>
+<li>Verify the RDS security group allows inbound on port 5432 from the ECS
+  task security group</li>
+<li>Confirm the RDS instance is in the same VPC or has appropriate VPC peering</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>aws<span class="w"> </span>rds<span class="w"> </span>describe-db-instances<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>--db-instance-identifier<span class="w"> </span>sporedb-db<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">&#39;DBInstances[0].Endpoint&#39;</span>
+</code></pre></div>
+<h3 id="filenotfounderror-for-keys-500-on-auth-endpoints">FileNotFoundError for keys / 500 on auth endpoints<a class="headerlink" href="#filenotfounderror-for-keys-500-on-auth-endpoints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify the Ed25519 base64 secrets exist in Secrets Manager:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>aws<span class="w"> </span>secretsmanager<span class="w"> </span>get-secret-value<span class="w"> </span>--secret-id<span class="w"> </span>sporedb/ed25519-private-key-b64<span class="w"> </span>--region<span class="w"> </span>us-east-1
+</code></pre></div></li>
+<li>Confirm the task definition <code>command</code> field includes the key decoding script</li>
+<li>Check that the container runs as a user with write access to
+  <code>/home/sporedb/app/keys/</code> (the default <code>sporedb</code> user in the Dockerfile has
+  this permission)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

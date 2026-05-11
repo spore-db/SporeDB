@@ -1,0 +1,2254 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Bioprocess-native time-series database">
+      
+      
+      
+        <link rel="canonical" href="https://spore-db.github.io/SporeDB/validation/IQ_protocol/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Installation Qualification Protocol - SporeDB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installation-qualification-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SporeDB" class="md-header__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SporeDB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installation Qualification Protocol
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/selfhosted/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SporeDB" class="md-nav__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SporeDB
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/selfhosted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Hosted
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/railway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Railway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/render/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/fly-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fly.io
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS ECS/Fargate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/digitalocean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DigitalOcean
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/sporedb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SporeDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sporedb-self-hosted-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SporeDB Self-Hosted Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-prerequisites-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Prerequisites Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-hardware-and-software-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Hardware and Software Requirements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Hardware and Software Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Hardware Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-software-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Software Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-installation-verification-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Installation Verification Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Installation Verification Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iq-001-docker-images-present" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-001: Docker Images Present
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-002-container-health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-002: Container Health Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-003-ed25519-signing-key-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-003: Ed25519 Signing Key Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-004-postgresql-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-004: PostgreSQL Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-005-minio-object-storage-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-005: MinIO Object Storage Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-006-sporedb-api-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-006: SporeDB API Health
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-007-sporedb_mode-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-007: SPOREDB_MODE Environment Variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-008-audit-trail-enabled-at-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-008: Audit Trail Enabled at Startup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-009-rbac-configuration-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-009: RBAC Configuration Verified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-010-ntptime-synchronization-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-010: NTP/Time Synchronization Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-011-database-schema-migration-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-011: Database Schema Migration Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-012-minio-bucket-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-012: MinIO Bucket Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-013-configuration-file-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IQ-013: Configuration File Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-deviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Deviations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-summary-of-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Summary of Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-approval-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Approval Signatures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-reference-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Reference Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Version History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="installation-qualification-protocol">Installation Qualification Protocol<a class="headerlink" href="#installation-qualification-protocol" title="Permanent link">&para;</a></h1>
+<h2 id="sporedb-self-hosted-deployment">SporeDB Self-Hosted Deployment<a class="headerlink" href="#sporedb-self-hosted-deployment" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Document ID</strong></td>
+<td>IQ-SPOREDB-001</td>
+</tr>
+<tr>
+<td><strong>Version</strong></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><strong>System</strong></td>
+<td>SporeDB v0.1.0</td>
+</tr>
+<tr>
+<td><strong>Effective Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Prepared By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Reviewed By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Approved By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-purpose">1. Purpose<a class="headerlink" href="#1-purpose" title="Permanent link">&para;</a></h2>
+<p>This Installation Qualification (IQ) protocol verifies that all SporeDB self-hosted components are installed correctly per approved specifications. Successful execution of this protocol confirms that the system hardware, software, and supporting infrastructure meet the documented requirements and are ready for Operational Qualification (OQ) testing.</p>
+<p>This protocol is designed to satisfy the requirements of:</p>
+<ul>
+<li>FDA 21 CFR Part 11, Section 11.10(a) -- Validation of systems to ensure accuracy, reliability, consistent intended performance, and the ability to discern invalid or altered records</li>
+<li>EU Annex 11, Clause 4 -- Validation documentation should cover system life cycle steps including the installation phase</li>
+<li>GAMP 5 guidelines for computerized system validation</li>
+</ul>
+<h2 id="2-scope">2. Scope<a class="headerlink" href="#2-scope" title="Permanent link">&para;</a></h2>
+<p>This IQ protocol covers the installation verification of the following SporeDB self-hosted deployment components:</p>
+<ul>
+<li><strong>SporeDB application container</strong> -- Docker image containing the FastAPI server, storage engine, compliance modules, and CLI tools</li>
+<li><strong>PostgreSQL database</strong> -- Metadata store for user accounts, batch metadata, access controls, and audit log index</li>
+<li><strong>MinIO object storage</strong> -- S3-compatible object storage for Parquet data files</li>
+<li><strong>Network configuration</strong> -- Inter-service connectivity, port availability, and DNS resolution</li>
+<li><strong>SSL/TLS certificates</strong> -- Transport encryption configuration (if applicable)</li>
+<li><strong>Ed25519 signing keys</strong> -- Cryptographic key pair for audit trail entry signing</li>
+<li><strong>RBAC configuration</strong> -- Default user accounts and role assignments</li>
+<li><strong>NTP/time synchronization</strong> -- System clock accuracy for audit trail timestamps</li>
+</ul>
+<h3 id="out-of-scope">Out of Scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Functional verification of SporeDB features (covered in OQ protocol OQ-SPOREDB-001)</li>
+<li>Performance testing under production conditions (covered in PQ protocol PQ-SPOREDB-001)</li>
+<li>Network security assessments and penetration testing</li>
+<li>Operating system hardening and patch management</li>
+</ul>
+<h2 id="3-prerequisites-checklist">3. Prerequisites Checklist<a class="headerlink" href="#3-prerequisites-checklist" title="Permanent link">&para;</a></h2>
+<p>Before executing this IQ protocol, verify that the following prerequisites are met:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Prerequisite</th>
+<th>Verified</th>
+<th>Initials</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Docker Engine &gt;= 24.0 installed on host server</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Docker Compose &gt;= 2.20 installed on host server</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Host server meets minimum hardware requirements (Section 4)</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Network ports 8000, 5432, 9000, 9001 are available</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Ed25519 signing key pair generated per key generation SOP</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>sporedb.yml</code> configuration file prepared per deployment SOP</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>7</td>
+<td>DNS or /etc/hosts entries configured for service discovery</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Docker images obtained (via registry pull or air-gap bundle)</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Approved change control ticket for this installation</td>
+<td>[ ]</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-hardware-and-software-requirements">4. Hardware and Software Requirements<a class="headerlink" href="#4-hardware-and-software-requirements" title="Permanent link">&para;</a></h2>
+<h3 id="41-hardware-requirements">4.1 Hardware Requirements<a class="headerlink" href="#41-hardware-requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Minimum Requirement</th>
+<th>Recommended</th>
+<th>Actual (Record)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>4 cores</td>
+<td>8 cores</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>8 GB</td>
+<td>16 GB</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>100 GB SSD</td>
+<td>500 GB SSD</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>100 Mbps</td>
+<td>1 Gbps</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-software-requirements">4.2 Software Requirements<a class="headerlink" href="#42-software-requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Required Version</th>
+<th>Actual Version</th>
+<th>Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operating System</td>
+<td>Linux (kernel &gt;= 5.10)</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Docker Engine</td>
+<td>&gt;= 24.0</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Docker Compose</td>
+<td>&gt;= 2.20</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>SporeDB Image</td>
+<td>v0.1.0</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>PostgreSQL Image</td>
+<td>16-alpine</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>MinIO Image</td>
+<td>latest (RELEASE.2025-*)</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-installation-verification-tests">5. Installation Verification Tests<a class="headerlink" href="#5-installation-verification-tests" title="Permanent link">&para;</a></h2>
+<h3 id="iq-001-docker-images-present">IQ-001: Docker Images Present<a class="headerlink" href="#iq-001-docker-images-present" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that all required Docker images are present on the host with correct version tags.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker images \| grep sporedb</code> <br> 2. Run: <code>docker images \| grep postgres</code> <br> 3. Run: <code>docker images \| grep minio</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>SporeDB image shows tag <code>v0.1.0</code> or configured version. PostgreSQL image shows tag <code>16-alpine</code>. MinIO image is present with expected release tag.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-002-container-health-checks">IQ-002: Container Health Checks<a class="headerlink" href="#iq-002-container-health-checks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-002</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that all Docker Compose services start and report healthy status.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker compose -f docker-compose.yml -f docker-compose.selfhosted.yml up -d</code> <br> 2. Wait 60 seconds for health checks to complete. <br> 3. Run: <code>docker compose ps</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All services (sporedb, postgres, minio) show status "healthy" or "running (healthy)". No services show "unhealthy" or "restarting".</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-003-ed25519-signing-key-configuration">IQ-003: Ed25519 Signing Key Configuration<a class="headerlink" href="#iq-003-ed25519-signing-key-configuration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-003</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the Ed25519 signing key pair is correctly configured and has appropriate file permissions.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Verify key files exist: <code>ls -la keys/cloud_private.pem keys/cloud_public.pem</code> <br> 2. Verify private key permissions: <code>stat -c '%a' keys/cloud_private.pem</code> (expect 600) <br> 3. Verify public key permissions: <code>stat -c '%a' keys/cloud_public.pem</code> (expect 644) <br> 4. Verify key type: <code>openssl pkey -in keys/cloud_private.pem -noout -text 2&gt;&amp;1 \| head -1</code> (expect "ED25519 Private-Key")</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Both key files exist. Private key has permissions 600 (owner read/write only). Public key has permissions 644. Key type is Ed25519.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-004-postgresql-connectivity">IQ-004: PostgreSQL Connectivity<a class="headerlink" href="#iq-004-postgresql-connectivity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-004</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the PostgreSQL database is running and accepting connections.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker compose exec postgres pg_isready -U sporedb</code> <br> 2. Run: <code>docker compose exec postgres psql -U sporedb -d sporedb -c "SELECT version();"</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td><code>pg_isready</code> returns "accepting connections". <code>psql</code> returns PostgreSQL version 16.x.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-005-minio-object-storage-connectivity">IQ-005: MinIO Object Storage Connectivity<a class="headerlink" href="#iq-005-minio-object-storage-connectivity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-005</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that MinIO object storage is running and accessible.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>curl -s -o /dev/null -w "%{http_code}" http://localhost:9000/minio/health/live</code> <br> 2. Run: <code>curl -s -o /dev/null -w "%{http_code}" http://localhost:9000/minio/health/cluster</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Both health endpoints return HTTP status code 200.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-006-sporedb-api-health">IQ-006: SporeDB API Health<a class="headerlink" href="#iq-006-sporedb-api-health" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-006</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the SporeDB API server is running and returns correct version information.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>curl -s http://localhost:8000/health</code> <br> 2. Parse JSON response and verify <code>version</code> field.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>HTTP 200 response with JSON body containing <code>"version": "0.1.0"</code> and <code>"status": "healthy"</code>.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-007-sporedb_mode-environment-variable">IQ-007: SPOREDB_MODE Environment Variable<a class="headerlink" href="#iq-007-sporedb_mode-environment-variable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-007</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the SporeDB container is running in self-hosted mode.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker compose exec sporedb env \| grep SPOREDB_MODE</code> <br> 2. Verify the value is <code>selfhosted</code>.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Output shows <code>SPOREDB_MODE=selfhosted</code>.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-008-audit-trail-enabled-at-startup">IQ-008: Audit Trail Enabled at Startup<a class="headerlink" href="#iq-008-audit-trail-enabled-at-startup" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-008</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the audit trail subsystem is active and writing entries at application startup.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Check container logs for audit trail initialization: <code>docker compose logs sporedb \| grep -i "audit"</code> <br> 2. Verify audit trail Parquet file exists: <code>docker compose exec sporedb ls -la data/audit/</code> <br> 3. Alternatively, query the health endpoint: <code>curl -s http://localhost:8000/health</code> and verify <code>audit_trail_active</code> is <code>true</code>.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Startup logs confirm audit trail initialization. Audit trail data directory exists. Health endpoint confirms audit trail is active.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-009-rbac-configuration-verified">IQ-009: RBAC Configuration Verified<a class="headerlink" href="#iq-009-rbac-configuration-verified" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-009</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that RBAC is configured with at least a default admin user and that role enforcement is active.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Check for default admin user: <code>docker compose exec sporedb sporedb admin list-users</code> or query the users endpoint: <code>curl -s -H "Authorization: Bearer &lt;admin-token&gt;" http://localhost:8000/api/users</code> <br> 2. Verify at least one user with admin role exists. <br> 3. Verify unauthenticated access is denied: <code>curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/api/batches</code> (expect 401 or 403).</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Default admin user exists with role "admin". Unauthenticated API requests are rejected with 401 or 403 status.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-010-ntptime-synchronization-verification">IQ-010: NTP/Time Synchronization Verification<a class="headerlink" href="#iq-010-ntptime-synchronization-verification" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-010</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the host server clock is synchronized via NTP. Accurate timestamps are critical for audit trail compliance per 21 CFR Part 11, Section 11.10(e).</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Check NTP synchronization status on host: <code>timedatectl status \| grep "synchronized"</code> <br> 2. Verify clock offset is within acceptable tolerance: <code>chronyc tracking \| grep "System time"</code> (or <code>ntpq -p</code> for ntpd) <br> 3. Verify container time matches host: <code>docker compose exec sporedb date -u</code> and compare with <code>date -u</code> on host.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>NTP synchronization is active ("System clock synchronized: yes"). Clock offset is less than 1 second. Container time matches host time within 1 second.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-011-database-schema-migration-status">IQ-011: Database Schema Migration Status<a class="headerlink" href="#iq-011-database-schema-migration-status" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-011</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that all Alembic database migrations have been applied to PostgreSQL.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker compose exec sporedb alembic current</code> <br> 2. Run: <code>docker compose exec sporedb alembic check</code> (returns 0 if up to date)</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Alembic reports the latest migration revision as current. No pending migrations.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-012-minio-bucket-configuration">IQ-012: MinIO Bucket Configuration<a class="headerlink" href="#iq-012-minio-bucket-configuration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-012</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the required MinIO storage buckets are created and accessible.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker compose exec minio mc alias set local http://localhost:9000 &lt;access-key&gt; &lt;secret-key&gt;</code> <br> 2. Run: <code>docker compose exec minio mc ls local/</code> <br> 3. Verify the <code>sporedb-data</code> bucket (or configured bucket name) exists.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>The SporeDB data bucket exists and is accessible. Bucket policy allows the SporeDB service account to read and write.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iq-013-configuration-file-validation">IQ-013: Configuration File Validation<a class="headerlink" href="#iq-013-configuration-file-validation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>IQ-013</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that <code>sporedb.yml</code> configuration file is syntactically valid and contains all required settings.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Run: <code>docker compose exec sporedb sporedb config validate</code> (or <code>python -c "import yaml; yaml.safe_load(open('/home/sporedb/app/sporedb.yml'))"</code>) <br> 2. Verify key settings are present: database URL, S3 endpoint, signing key path, RBAC enabled flag.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Configuration file parses without errors. All required fields are present and non-empty.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-deviations">6. Deviations<a class="headerlink" href="#6-deviations" title="Permanent link">&para;</a></h2>
+<p>Record any deviations from expected results during IQ execution. All deviations must be documented, assessed for impact, and resolved before proceeding to OQ.</p>
+<table>
+<thead>
+<tr>
+<th>Deviation #</th>
+<th>Test Case</th>
+<th>Description</th>
+<th>Impact Assessment</th>
+<th>Resolution</th>
+<th>Resolved By</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-summary-of-results">7. Summary of Results<a class="headerlink" href="#7-summary-of-results" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total Test Cases</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Deviations Recorded</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Deviations Resolved</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-conclusion">8. Conclusion<a class="headerlink" href="#8-conclusion" title="Permanent link">&para;</a></h2>
+<p>Based on the results documented in this protocol:</p>
+<ul>
+<li>[ ] All installation verification tests PASSED -- the system is qualified for Operational Qualification (OQ).</li>
+<li>[ ] One or more tests FAILED -- deviations have been recorded and resolved. The system is qualified for OQ upon deviation closure.</li>
+<li>[ ] One or more tests FAILED -- unresolved deviations prevent progression to OQ. Re-installation and re-execution of IQ required.</li>
+</ul>
+<p><strong>Comments:</strong></p>
+<hr />
+<hr />
+<h2 id="9-approval-signatures">9. Approval Signatures<a class="headerlink" href="#9-approval-signatures" title="Permanent link">&para;</a></h2>
+<p>By signing below, I confirm that I have reviewed the results of this Installation Qualification protocol and that the conclusions are accurate and supported by the documented evidence.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Name</th>
+<th>Signature</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>QA Reviewer</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>System Administrator</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Quality Head</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-a-reference-documents">Appendix A: Reference Documents<a class="headerlink" href="#appendix-a-reference-documents" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>ID</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OQ Protocol</td>
+<td>OQ-SPOREDB-001</td>
+<td>Operational Qualification protocol for SporeDB</td>
+</tr>
+<tr>
+<td>PQ Protocol</td>
+<td>PQ-SPOREDB-001</td>
+<td>Performance Qualification protocol for SporeDB</td>
+</tr>
+<tr>
+<td>Traceability Matrix</td>
+<td>RTM-SPOREDB-001</td>
+<td>Requirements Traceability Matrix</td>
+</tr>
+<tr>
+<td>Deployment SOP</td>
+<td><em>(site-specific)</em></td>
+<td>Standard operating procedure for SporeDB deployment</td>
+</tr>
+<tr>
+<td>Key Generation SOP</td>
+<td><em>(site-specific)</em></td>
+<td>Standard operating procedure for Ed25519 key generation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-b-version-history">Appendix B: Version History<a class="headerlink" href="#appendix-b-version-history" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>Initial IQ protocol</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

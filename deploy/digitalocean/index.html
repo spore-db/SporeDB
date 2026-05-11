@@ -1,0 +1,1942 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Bioprocess-native time-series database">
+      
+      
+      
+        <link rel="canonical" href="https://spore-db.github.io/SporeDB/deploy/digitalocean/">
+      
+      
+        <link rel="prev" href="../aws/">
+      
+      
+        <link rel="next" href="../../reference/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>DigitalOcean - SporeDB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploy-sporedb-on-digitalocean" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SporeDB" class="md-header__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SporeDB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DigitalOcean
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../deployment/selfhosted/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SporeDB" class="md-nav__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SporeDB
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/selfhosted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Hosted
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../railway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Railway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../render/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fly-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fly.io
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS ECS/Fargate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DigitalOcean
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DigitalOcean
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-connect-your-github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Connect Your GitHub Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-the-app-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configure the App Component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-add-a-managed-postgresql-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Add a Managed PostgreSQL Database
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-create-a-spaces-bucket-s3-compatible-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Create a Spaces Bucket (S3-Compatible Storage)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-generate-ed25519-signing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Generate Ed25519 Signing Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-set-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Set Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-override-the-docker-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Override the Docker Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Deploy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-provisioned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Provisioned
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-string-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection String Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ed25519-key-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ed25519 Key Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Sizing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-connection-refused-rfc1738-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database connection refused / rfc1738 error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spaces-access-denied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spaces access denied
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#500-on-auth-endpoints-filenotfounderror-for-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        500 on auth endpoints / FileNotFoundError for keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/sporedb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SporeDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-Step Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-connect-your-github-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Connect Your GitHub Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-the-app-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configure the App Component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-add-a-managed-postgresql-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Add a Managed PostgreSQL Database
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-create-a-spaces-bucket-s3-compatible-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Create a Spaces Bucket (S3-Compatible Storage)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-generate-ed25519-signing-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Generate Ed25519 Signing Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-set-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Set Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-override-the-docker-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Override the Docker Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Deploy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-gets-provisioned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Gets Provisioned
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-string-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection String Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ed25519-key-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ed25519 Key Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Sizing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-connection-refused-rfc1738-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database connection refused / rfc1738 error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spaces-access-denied" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spaces access denied
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#500-on-auth-endpoints-filenotfounderror-for-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        500 on auth endpoints / FileNotFoundError for keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="deploy-sporedb-on-digitalocean">Deploy SporeDB on DigitalOcean<a class="headerlink" href="#deploy-sporedb-on-digitalocean" title="Permanent link">&para;</a></h1>
+<p>Deploy SporeDB on DigitalOcean App Platform with managed PostgreSQL and
+Spaces (S3-compatible storage). Estimated time: 10 minutes.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DigitalOcean account</td>
+<td>With billing enabled</td>
+</tr>
+<tr>
+<td><code>doctl</code> CLI</td>
+<td>Installed and authenticated (<code>doctl auth init</code>)</td>
+</tr>
+<tr>
+<td>GitHub repo</td>
+<td>SporeDB repo forked to your account or connected as a source in App Platform</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<p>Go to <strong>cloud.digitalocean.com &gt; App Platform &gt; Create App</strong>, select your
+SporeDB GitHub repo, and follow the wizard. Or use the CLI:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>doctl<span class="w"> </span>apps<span class="w"> </span>create<span class="w"> </span>--spec<span class="w"> </span>.do/app-spec.yaml
+</code></pre></div>
+<blockquote>
+<p>Note: SporeDB does not ship a <code>.do/app-spec.yaml</code> file. This guide focuses
+on the console walkthrough. See the step-by-step instructions below.</p>
+</blockquote>
+<h2 id="step-by-step-setup">Step-by-Step Setup<a class="headerlink" href="#step-by-step-setup" title="Permanent link">&para;</a></h2>
+<h3 id="1-connect-your-github-repository">1. Connect Your GitHub Repository<a class="headerlink" href="#1-connect-your-github-repository" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>cloud.digitalocean.com &gt; App Platform &gt; Create App</strong></li>
+<li>Select <strong>GitHub</strong> as the source</li>
+<li>Authorize DigitalOcean to access your GitHub account (if not already done)</li>
+<li>Select the <strong>SporeDB</strong> repository and the <code>main</code> branch</li>
+</ol>
+<h3 id="2-configure-the-app-component">2. Configure the App Component<a class="headerlink" href="#2-configure-the-app-component" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Set the component name to <code>sporedb</code></li>
+<li>Set the type to <strong>Web Service</strong></li>
+<li>Set the Dockerfile path to <code>Dockerfile</code></li>
+<li>Set the HTTP port to <code>8000</code></li>
+</ol>
+<h3 id="3-add-a-managed-postgresql-database">3. Add a Managed PostgreSQL Database<a class="headerlink" href="#3-add-a-managed-postgresql-database" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Click <strong>Add Resource &gt; Database</strong></li>
+<li>Select <strong>PostgreSQL</strong></li>
+<li>Choose the <strong>Development</strong> plan ($7/mo, single node)</li>
+<li>Name the database <code>sporedb-db</code></li>
+</ol>
+<h3 id="4-create-a-spaces-bucket-s3-compatible-storage">4. Create a Spaces Bucket (S3-Compatible Storage)<a class="headerlink" href="#4-create-a-spaces-bucket-s3-compatible-storage" title="Permanent link">&para;</a></h3>
+<p>Spaces is created separately from App Platform:</p>
+<ol>
+<li>Go to <strong>cloud.digitalocean.com &gt; Spaces Object Storage &gt; Create a Space</strong></li>
+<li>Choose a region (e.g., <code>nyc3</code>)</li>
+<li>Name the Space <code>sporedb</code></li>
+<li>Note the endpoint URL (e.g., <code>https://nyc3.digitaloceanspaces.com</code>)</li>
+<li>Go to <strong>API &gt; Spaces Keys &gt; Generate New Key</strong></li>
+<li>Save the access key and secret key</li>
+</ol>
+<h3 id="5-generate-ed25519-signing-keys">5. Generate Ed25519 Signing Keys<a class="headerlink" href="#5-generate-ed25519-signing-keys" title="Permanent link">&para;</a></h3>
+<p>SporeDB uses Ed25519 key pairs for JWT authentication and audit trail signing.
+Generate them locally:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>openssl<span class="w"> </span>genpkey<span class="w"> </span>-algorithm<span class="w"> </span>ed25519<span class="w"> </span>-out<span class="w"> </span>private.pem
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>openssl<span class="w"> </span>pkey<span class="w"> </span>-in<span class="w"> </span>private.pem<span class="w"> </span>-pubout<span class="w"> </span>-out<span class="w"> </span>public.pem
+</code></pre></div>
+<p>Base64-encode for upload as environment variables:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Cross-platform single-line base64 (works on both macOS and Linux):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>openssl<span class="w"> </span>base64<span class="w"> </span>-A<span class="w"> </span>-in<span class="w"> </span>private.pem<span class="w">   </span><span class="c1"># Set as SPOREDB_ED25519_PRIVATE_KEY_B64</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>openssl<span class="w"> </span>base64<span class="w"> </span>-A<span class="w"> </span>-in<span class="w"> </span>public.pem<span class="w">    </span><span class="c1"># Set as SPOREDB_ED25519_PUBLIC_KEY_B64</span>
+</code></pre></div>
+<h3 id="6-set-environment-variables">6. Set Environment Variables<a class="headerlink" href="#6-set-environment-variables" title="Permanent link">&para;</a></h3>
+<p>In the App Platform settings, add the following environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value</th>
+<th>Secret?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPOREDB_MODE</code></td>
+<td><code>selfhosted</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>SPOREDB_SERVER_PORT</code></td>
+<td><code>8000</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>SPOREDB_DATABASE_URL</code></td>
+<td><code>postgresql+asyncpg://user:pass@host:25060/db?sslmode=require</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_ENDPOINT</code></td>
+<td><code>https://nyc3.digitaloceanspaces.com</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_ACCESS_KEY</code></td>
+<td>(your Spaces API key)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_SECRET_KEY</code></td>
+<td>(your Spaces API secret)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_BUCKET</code></td>
+<td><code>sporedb</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>SPOREDB_ED25519_PRIVATE_KEY_B64</code></td>
+<td>(base64-encoded private key)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>SPOREDB_ED25519_PUBLIC_KEY_B64</code></td>
+<td>(base64-encoded public key)</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>WARNING:</strong> Do NOT use the auto-injected <code>${db.DATABASE_URL}</code> variable
+directly. DigitalOcean injects it in <code>postgresql://</code> format, but SporeDB
+requires <code>postgresql+asyncpg://</code> format. You MUST set <code>SPOREDB_DATABASE_URL</code>
+manually with the correct prefix.</p>
+<p>To construct the URL: go to the database component in App Platform, copy the
+connection details (host, port, username, password, database name), and
+assemble them as:
+<code>postgresql+asyncpg://username:password@host:25060/dbname?sslmode=require</code></p>
+</blockquote>
+<h3 id="7-override-the-docker-command">7. Override the Docker Command<a class="headerlink" href="#7-override-the-docker-command" title="Permanent link">&para;</a></h3>
+<p>SporeDB loads Ed25519 keys from file paths only. On App Platform, container
+filesystems are ephemeral. Override the Docker command to decode base64-encoded
+keys at startup.</p>
+<p>In the app component settings, set the <strong>Run Command</strong> to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;mkdir -p /home/sporedb/app/keys &amp;&amp; echo &quot;$SPOREDB_ED25519_PRIVATE_KEY_B64&quot; | base64 -d &gt; /home/sporedb/app/keys/cloud_private.pem &amp;&amp; echo &quot;$SPOREDB_ED25519_PUBLIC_KEY_B64&quot; | base64 -d &gt; /home/sporedb/app/keys/cloud_public.pem &amp;&amp; export SPOREDB_JWT_SECRET_KEY_PATH=/home/sporedb/app/keys/cloud_private.pem &amp;&amp; export SPOREDB_JWT_PUBLIC_KEY_PATH=/home/sporedb/app/keys/cloud_public.pem &amp;&amp; exec uvicorn sporedb.cloud.app:create_app --factory --host 0.0.0.0 --port 8000&#39;</span>
+</code></pre></div>
+<p>This command:</p>
+<ol>
+<li>Creates the keys directory</li>
+<li>Decodes the base64-encoded Ed25519 keys to PEM files</li>
+<li>Sets the key file path environment variables</li>
+<li>Launches the SporeDB server</li>
+</ol>
+<h3 id="8-deploy">8. Deploy<a class="headerlink" href="#8-deploy" title="Permanent link">&para;</a></h3>
+<p>Click <strong>Create Resources</strong> and wait for the build and deployment to complete.
+App Platform will build the Docker image from the repository and start the
+service.</p>
+<h3 id="9-verify">9. Verify<a class="headerlink" href="#9-verify" title="Permanent link">&para;</a></h3>
+<p>Once deployed, check the app URL:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-f<span class="w"> </span>https://your-app-name.ondigitalocean.app/health
+</code></pre></div>
+<p>The health endpoint should return HTTP 200.</p>
+<h2 id="what-gets-provisioned">What Gets Provisioned<a class="headerlink" href="#what-gets-provisioned" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App container</td>
+<td>Basic instance, 512 MB RAM</td>
+</tr>
+<tr>
+<td>Managed PostgreSQL</td>
+<td>Basic (256 MB), single node</td>
+</tr>
+<tr>
+<td>Spaces bucket</td>
+<td>User-created separately</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Source</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPOREDB_MODE</code></td>
+<td>App env var</td>
+<td><code>selfhosted</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_SERVER_PORT</code></td>
+<td>App env var</td>
+<td><code>8000</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_ENDPOINT</code></td>
+<td>App env var</td>
+<td>Spaces endpoint URL</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_BUCKET</code></td>
+<td>App env var</td>
+<td><code>sporedb</code></td>
+</tr>
+<tr>
+<td><code>SPOREDB_DATABASE_URL</code></td>
+<td>App env var (encrypted)</td>
+<td><code>postgresql+asyncpg://...</code> (manual, not auto-injected)</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_ACCESS_KEY</code></td>
+<td>App env var (encrypted)</td>
+<td>Spaces API key</td>
+</tr>
+<tr>
+<td><code>SPOREDB_S3_SECRET_KEY</code></td>
+<td>App env var (encrypted)</td>
+<td>Spaces API secret</td>
+</tr>
+<tr>
+<td><code>SPOREDB_ED25519_PRIVATE_KEY_B64</code></td>
+<td>App env var (encrypted)</td>
+<td>Base64-encoded Ed25519 private key</td>
+</tr>
+<tr>
+<td><code>SPOREDB_ED25519_PUBLIC_KEY_B64</code></td>
+<td>App env var (encrypted)</td>
+<td>Base64-encoded Ed25519 public key</td>
+</tr>
+</tbody>
+</table>
+<h3 id="connection-string-format">Connection String Format<a class="headerlink" href="#connection-string-format" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>WARNING:</strong> DigitalOcean's auto-injected <code>${db.DATABASE_URL}</code> uses
+<code>postgresql://</code> format. SporeDB requires <code>postgresql+asyncpg://</code> format.
+You MUST set <code>SPOREDB_DATABASE_URL</code> manually with the correct prefix.</p>
+<p><strong>Correct:</strong> <code>postgresql+asyncpg://user:pass@host:25060/db?sslmode=require</code>
+<strong>Wrong:</strong> <code>postgresql://user:pass@host:25060/db?sslmode=require</code></p>
+</blockquote>
+<h2 id="ed25519-key-setup">Ed25519 Key Setup<a class="headerlink" href="#ed25519-key-setup" title="Permanent link">&para;</a></h2>
+<p>SporeDB loads Ed25519 signing keys from file paths only. On DigitalOcean App
+Platform, container filesystems are ephemeral -- key files do not persist
+across deploys. The Docker command override handles this by:</p>
+<ol>
+<li>Reading <code>SPOREDB_ED25519_PRIVATE_KEY_B64</code> and <code>SPOREDB_ED25519_PUBLIC_KEY_B64</code>
+   from encrypted environment variables</li>
+<li>Decoding the base64 values to PEM files at <code>/home/sporedb/app/keys/</code></li>
+<li>Setting <code>SPOREDB_JWT_SECRET_KEY_PATH</code> and <code>SPOREDB_JWT_PUBLIC_KEY_PATH</code></li>
+<li>Launching uvicorn</li>
+</ol>
+<p>Do NOT set <code>SPOREDB_JWT_SECRET_KEY_PATH</code> or <code>SPOREDB_JWT_PUBLIC_KEY_PATH</code> to
+local file paths in environment variables -- the files will not exist on the
+ephemeral container filesystem. Use the base64 startup script pattern instead.</p>
+<h2 id="cost-estimate">Cost Estimate<a class="headerlink" href="#cost-estimate" title="Permanent link">&para;</a></h2>
+<p>All prices are approximate monthly costs for DigitalOcean.</p>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>App</th>
+<th>Managed Postgres</th>
+<th>Spaces</th>
+<th>Total/month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small (10 batches)</td>
+<td>$5/mo (basic, 512 MB)</td>
+<td>$7/mo (basic-256mb)</td>
+<td>$5/mo (250 GB included)</td>
+<td>~$17/mo</td>
+</tr>
+<tr>
+<td>Medium (50 batches)</td>
+<td>$10/mo (basic, 1 GB)</td>
+<td>$15/mo (basic-1gb)</td>
+<td>$5/mo</td>
+<td>~$30/mo</td>
+</tr>
+<tr>
+<td>Large (100+ batches)</td>
+<td>$22/mo (pro, 1 GB)</td>
+<td>$50/mo (basic-4gb)</td>
+<td>$5/mo</td>
+<td>~$77/mo</td>
+</tr>
+</tbody>
+</table>
+<h2 id="recommended-sizing">Recommended Sizing<a class="headerlink" href="#recommended-sizing" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>CPU</th>
+<th>RAM</th>
+<th>DB Plan</th>
+<th>Spaces Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small (10 batches)</td>
+<td>1 vCPU</td>
+<td>512 MB</td>
+<td>basic-256mb</td>
+<td>10 GB</td>
+</tr>
+<tr>
+<td>Medium (50 batches)</td>
+<td>1 vCPU</td>
+<td>1 GB</td>
+<td>basic-1gb</td>
+<td>50 GB</td>
+</tr>
+<tr>
+<td>Large (100+ batches)</td>
+<td>2 vCPU</td>
+<td>2 GB</td>
+<td>basic-4gb</td>
+<td>100 GB</td>
+</tr>
+</tbody>
+</table>
+<p>To change app sizing, update the instance type in App Platform settings.
+To upgrade the database, modify the plan via the database component settings.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="build-fails">Build fails<a class="headerlink" href="#build-fails" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify the Dockerfile is at the repository root and the correct branch is
+  selected</li>
+<li>Check the build logs in App Platform for specific errors</li>
+<li>Ensure the repository is connected and DigitalOcean has read access</li>
+</ul>
+<h3 id="database-connection-refused-rfc1738-error">Database connection refused / rfc1738 error<a class="headerlink" href="#database-connection-refused-rfc1738-error" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify <code>SPOREDB_DATABASE_URL</code> has the <code>postgresql+asyncpg://</code> prefix</li>
+<li>Do NOT use the auto-injected <code>${db.DATABASE_URL}</code> -- it uses <code>postgresql://</code>
+  format which SporeDB does not auto-translate</li>
+<li>Confirm the database is in the same region as the app and the trusted sources
+  include the app component</li>
+<li>Ensure <code>?sslmode=require</code> is appended to the connection string (DigitalOcean
+  managed databases require SSL)</li>
+</ul>
+<h3 id="spaces-access-denied">Spaces access denied<a class="headerlink" href="#spaces-access-denied" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify the Spaces API key has read/write permissions</li>
+<li>Ensure the bucket region matches the endpoint URL (e.g., <code>nyc3</code> bucket uses
+  <code>https://nyc3.digitaloceanspaces.com</code>)</li>
+<li>Check that the bucket name in <code>SPOREDB_S3_BUCKET</code> matches exactly</li>
+</ul>
+<h3 id="500-on-auth-endpoints-filenotfounderror-for-keys">500 on auth endpoints / FileNotFoundError for keys<a class="headerlink" href="#500-on-auth-endpoints-filenotfounderror-for-keys" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify <code>SPOREDB_ED25519_PRIVATE_KEY_B64</code> and <code>SPOREDB_ED25519_PUBLIC_KEY_B64</code>
+  are set as encrypted environment variables</li>
+<li>Confirm the Docker command override is in place (see Step 7)</li>
+<li>Check the app runtime logs for specific error messages</li>
+<li>Ensure the base64 encoding is correct:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Verify locally</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;YOUR_B64_VALUE&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Should output: -----BEGIN PRIVATE KEY-----</span>
+</code></pre></div></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

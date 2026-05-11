@@ -1,0 +1,2049 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Bioprocess-native time-series database">
+      
+      
+      
+        <link rel="canonical" href="https://spore-db.github.io/SporeDB/validation/PQ_protocol/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Performance Qualification Protocol - SporeDB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#performance-qualification-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SporeDB" class="md-header__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SporeDB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Performance Qualification Protocol
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../deployment/selfhosted/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SporeDB" class="md-nav__button md-logo" aria-label="SporeDB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SporeDB
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/spore-db/SporeDB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spore-db/SporeDB
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/selfhosted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Hosted
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy Guides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/railway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Railway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/render/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Render
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/fly-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fly.io
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS ECS/Fargate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deploy/digitalocean/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DigitalOcean
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/sporedb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SporeDB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sporedb-self-hosted-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SporeDB Self-Hosted Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#out-of-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Out of Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test Environment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Test Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-environment-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Environment Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-test-data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Test Data Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-test-duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Test Duration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-end-user-process-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. End-User Process Tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. End-User Process Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pq-001-full-bioprocess-data-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-001: Full Bioprocess Data Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pq-002-multi-user-concurrent-access-with-rbac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-002: Multi-User Concurrent Access with RBAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pq-003-large-dataset-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-003: Large Dataset Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pq-004-audit-trail-under-sustained-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-004: Audit Trail Under Sustained Load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pq-005-data-export-fidelity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-005: Data Export Fidelity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pq-006-backup-and-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-006: Backup and Restore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pq-007-system-stability-over-extended-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PQ-007: System Stability Over Extended Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-deviations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Deviations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-summary-of-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Summary of Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-approval-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Approval Signatures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-reference-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Reference Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-test-data-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Test Data Inventory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-c-version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Version History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="performance-qualification-protocol">Performance Qualification Protocol<a class="headerlink" href="#performance-qualification-protocol" title="Permanent link">&para;</a></h1>
+<h2 id="sporedb-self-hosted-deployment">SporeDB Self-Hosted Deployment<a class="headerlink" href="#sporedb-self-hosted-deployment" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Document ID</strong></td>
+<td>PQ-SPOREDB-001</td>
+</tr>
+<tr>
+<td><strong>Version</strong></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><strong>System</strong></td>
+<td>SporeDB v0.1.0</td>
+</tr>
+<tr>
+<td><strong>Effective Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Prepared By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Reviewed By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Approved By</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-purpose">1. Purpose<a class="headerlink" href="#1-purpose" title="Permanent link">&para;</a></h2>
+<p>This Performance Qualification (PQ) protocol verifies that SporeDB performs reliably under production-like conditions with representative data volumes, concurrent user loads, and end-to-end bioprocess workflows. Successful execution of this protocol confirms that the system is suitable for routine use in a GxP-regulated environment.</p>
+<p>This protocol should be executed only after successful completion of:</p>
+<ul>
+<li>Installation Qualification (IQ-SPOREDB-001)</li>
+<li>Operational Qualification (OQ-SPOREDB-001)</li>
+</ul>
+<h2 id="2-scope">2. Scope<a class="headerlink" href="#2-scope" title="Permanent link">&para;</a></h2>
+<p>This PQ protocol covers:</p>
+<ul>
+<li>End-to-end bioprocess data workflows (CSV import through phase detection and alignment)</li>
+<li>Multi-user concurrent access with RBAC role enforcement</li>
+<li>Large dataset handling and query performance</li>
+<li>Audit trail integrity under sustained write loads</li>
+<li>Data export fidelity and round-trip verification</li>
+<li>Backup and restore procedures with data integrity verification</li>
+</ul>
+<h3 id="out-of-scope">Out of Scope<a class="headerlink" href="#out-of-scope" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Unit-level testing of individual functions (covered in automated test suite)</li>
+<li>Feature-level testing of individual compliance controls (covered in OQ)</li>
+<li>Network security and penetration testing</li>
+<li>Disaster recovery for infrastructure-level failures (e.g., hardware failure)</li>
+</ul>
+<h2 id="3-test-environment">3. Test Environment<a class="headerlink" href="#3-test-environment" title="Permanent link">&para;</a></h2>
+<h3 id="31-environment-specification">3.1 Environment Specification<a class="headerlink" href="#31-environment-specification" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Self-hosted per IQ-SPOREDB-001</td>
+</tr>
+<tr>
+<td><strong>Hardware</strong></td>
+<td>Per IQ Section 4 hardware requirements</td>
+</tr>
+<tr>
+<td><strong>SporeDB Version</strong></td>
+<td>v0.1.0 (as installed during IQ)</td>
+</tr>
+<tr>
+<td><strong>Network</strong></td>
+<td>Production-equivalent LAN configuration</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-test-data-requirements">3.2 Test Data Requirements<a class="headerlink" href="#32-test-data-requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Description</th>
+<th>Minimum Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fermentation CSV files</td>
+<td>Real or representative bioreactor time-series data (DO, pH, temperature, OD, biomass)</td>
+<td>10 files, 50K--500K rows each</td>
+</tr>
+<tr>
+<td>Large batch dataset</td>
+<td>Single batch with dense time-series telemetry</td>
+<td>1M+ telemetry data points</td>
+</tr>
+<tr>
+<td>Offline assay data</td>
+<td>LC-MS/HPLC results with timestamps, values, and uncertainties</td>
+<td>100+ assay measurements across 5+ batches</td>
+</tr>
+<tr>
+<td>User accounts</td>
+<td>Test accounts with different RBAC roles</td>
+<td>5+ accounts (2 admin, 2 editor, 1 viewer)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-test-duration">3.3 Test Duration<a class="headerlink" href="#33-test-duration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Duration</th>
+<th>Activities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day 1</td>
+<td>Setup</td>
+<td>Prepare test data, create user accounts, document baseline system state</td>
+</tr>
+<tr>
+<td>Day 2--3</td>
+<td>Execution</td>
+<td>Execute PQ test cases, record results, document any deviations</td>
+</tr>
+<tr>
+<td>Day 4</td>
+<td>Stress test</td>
+<td>Run concurrent access and large dataset tests</td>
+</tr>
+<tr>
+<td>Day 5</td>
+<td>Review</td>
+<td>Complete documentation, resolve deviations, prepare final report</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-end-user-process-tests">4. End-User Process Tests<a class="headerlink" href="#4-end-user-process-tests" title="Permanent link">&para;</a></h2>
+<h3 id="pq-001-full-bioprocess-data-workflow">PQ-001: Full Bioprocess Data Workflow<a class="headerlink" href="#pq-001-full-bioprocess-data-workflow" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify the complete end-to-end workflow: CSV import, batch creation, automatic phase detection, and cross-run alignment. This represents the primary scientist use case.</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>3+ fermentation CSV files with overlapping time-series variables (DO, pH, temperature). At least 50K rows each.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Import first CSV file via SDK: <code>sporedb.import_csv("run_001.csv", batch_name="Batch-PQ-001")</code> <br> 2. Record import time (wall clock). <br> 3. Verify batch is created with correct metadata. <br> 4. Run phase detection: <code>sporedb.detect_phases("Batch-PQ-001")</code> <br> 5. Record phase detection time. <br> 6. Verify at least 3 phases detected (lag, exponential, stationary). <br> 7. Import 2 additional CSV files as separate batches. <br> 8. Run cross-run alignment: <code>sporedb.align(["Batch-PQ-001", "Batch-PQ-002", "Batch-PQ-003"], by="phase")</code> <br> 9. Record alignment time. <br> 10. Verify aligned data is accessible and phase boundaries are consistent.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All imports succeed. Phase detection identifies biologically meaningful phases. Alignment produces time-normalized data for all three runs. Total workflow time &lt; 60 seconds for 50K-row files.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Timings</strong></td>
+<td>Import: <strong><em>_s, Phase detection: </em></strong>_s, Alignment: ____s</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pq-002-multi-user-concurrent-access-with-rbac">PQ-002: Multi-User Concurrent Access with RBAC<a class="headerlink" href="#pq-002-multi-user-concurrent-access-with-rbac" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-002</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that 3+ users with different RBAC roles can operate the system simultaneously without interference, and that role-based access controls are enforced under concurrent conditions.</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>3+ user accounts created (admin, editor, viewer roles). Test batches created during PQ-001.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. <strong>User A (Admin):</strong> Create a new batch and import data simultaneously with User B and C operations. <br> 2. <strong>User B (Editor):</strong> Modify batch metadata on an existing batch. <br> 3. <strong>User C (Viewer):</strong> Query and export batch data. <br> 4. All three operations run concurrently (within 10-second window). <br> 5. Verify User C (Viewer) cannot modify data: attempt a write operation and confirm rejection (403). <br> 6. Verify all operations complete without deadlock or data corruption. <br> 7. Verify audit trail captures all three users' actions with correct timestamps and user IDs.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All concurrent operations complete successfully. Viewer write attempts are rejected. Audit trail shows 3 distinct user IDs with correct chronological ordering. No data corruption or deadlocks.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pq-003-large-dataset-handling">PQ-003: Large Dataset Handling<a class="headerlink" href="#pq-003-large-dataset-handling" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-003</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that SporeDB handles a batch with 1M+ telemetry data points and that queries complete within acceptable performance thresholds.</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>CSV file with 1M+ rows of time-series data (or generate synthetic data matching bioreactor telemetry patterns).</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Import the large CSV: <code>sporedb.import_csv("large_batch.csv", batch_name="Batch-PQ-Large")</code> <br> 2. Record import time. <br> 3. Run a time-range query selecting 10% of the data: <code>sporedb.query("SELECT * FROM 'Batch-PQ-Large' WHERE time &gt; '2025-01-01' AND time &lt; '2025-01-04'")</code> <br> 4. Record query time. <br> 5. Run phase detection on the large batch. <br> 6. Record phase detection time. <br> 7. Run an aggregation query: <code>sporedb.query("SELECT avg(dissolved_oxygen), max(ph) FROM 'Batch-PQ-Large' GROUP BY phase")</code> <br> 8. Record aggregation query time.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>Import completes (time recorded for baseline). Time-range query completes in &lt; 5 seconds. Aggregation query completes in &lt; 5 seconds. Phase detection completes (time recorded for baseline).</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Timings</strong></td>
+<td>Import: <strong><em>_s, Range query: </em></strong>_s, Phase detection: <strong><em>_s, Aggregation: </em></strong>_s</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pq-004-audit-trail-under-sustained-load">PQ-004: Audit Trail Under Sustained Load<a class="headerlink" href="#pq-004-audit-trail-under-sustained-load" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-004</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that the audit trail maintains hash chain integrity and Ed25519 signature validity after 100+ sequential write operations.</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>System running with audit trail enabled (verified in IQ-008).</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Perform 100+ sequential data-modifying operations (batch creation, metadata updates, data imports). <br> 2. Record the time to complete all operations. <br> 3. Export the full audit trail: <code>sporedb audit export --format parquet --output audit_pq004.parquet</code> <br> 4. Run compliance validation: <code>sporedb compliance validate --regulation all</code> <br> 5. Verify hash chain integrity: all entries linked correctly via SHA-256 previous_entry_hash. <br> 6. Verify Ed25519 signatures: all entries have valid signatures. <br> 7. Verify Merkle tree checkpoint consistency. <br> 8. Count total audit entries and verify count &gt;= 100.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All 100+ operations complete without error. Hash chain is intact (no broken links). All signatures verify successfully. Merkle checkpoint is consistent. Compliance validator reports PASS for all checks.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Audit entry count</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pq-005-data-export-fidelity">PQ-005: Data Export Fidelity<a class="headerlink" href="#pq-005-data-export-fidelity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-005</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify data export and re-import round-trip fidelity. Exported data must match the original source data bit-for-bit (within floating-point representation limits).</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>Batch imported during PQ-001 with known source CSV.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Export batch data to CSV: <code>sporedb export csv "Batch-PQ-001" --output exported_pq005.csv</code> <br> 2. Compute SHA-256 checksum of the original source CSV (data columns only, excluding headers if format differs): <code>sha256sum run_001.csv</code> <br> 3. Compute SHA-256 checksum of the exported CSV (data columns only): <code>sha256sum exported_pq005.csv</code> <br> 4. If checksums differ due to formatting (column order, timestamp format), perform column-by-column numerical comparison using pandas: load both DataFrames, sort by timestamp, compare with <code>pandas.testing.assert_frame_equal(check_dtype=False, atol=1e-10)</code>. <br> 5. Re-import the exported CSV: <code>sporedb.import_csv("exported_pq005.csv", batch_name="Batch-PQ-Reimport")</code> <br> 6. Compare re-imported batch data with original batch data.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All numerical values match within floating-point tolerance (atol=1e-10). All timestamps match exactly. All metadata fields match. Re-imported batch is identical to original.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pq-006-backup-and-restore">PQ-006: Backup and Restore<a class="headerlink" href="#pq-006-backup-and-restore" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-006</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify that a full system backup (PostgreSQL + MinIO) can be restored to a fresh SporeDB instance with complete data integrity.</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>System has data from PQ-001 through PQ-005. At least 3 batches with telemetry data and a populated audit trail.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Record current state: count of batches, total telemetry points, audit trail entry count, last Merkle root hash. <br> 2. Perform PostgreSQL backup: <code>docker compose exec postgres pg_dump -U sporedb sporedb &gt; backup_pq006.sql</code> <br> 3. Perform MinIO backup: copy the MinIO data volume or use <code>mc mirror</code> to export all objects. <br> 4. Stop the current deployment: <code>docker compose down -v</code> (destroy volumes). <br> 5. Start a fresh deployment: <code>docker compose -f docker-compose.yml -f docker-compose.selfhosted.yml up -d</code> <br> 6. Restore PostgreSQL: <code>cat backup_pq006.sql \| docker compose exec -T postgres psql -U sporedb sporedb</code> <br> 7. Restore MinIO data (copy volume or <code>mc mirror</code> back). <br> 8. Verify: count batches, total telemetry points, audit trail entries. <br> 9. Run compliance validation: <code>sporedb compliance validate --regulation all</code> <br> 10. Compare all counts and Merkle root hash with pre-backup values.</td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All batch counts match pre-backup state. All telemetry point counts match. Audit trail entry count matches. Merkle root hash matches. Compliance validation passes.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Pre-backup counts</strong></td>
+<td>Batches: <strong><em>_</em>, Telemetry points: </strong><strong><em>, Audit entries: </em></strong>__</td>
+</tr>
+<tr>
+<td><strong>Post-restore counts</strong></td>
+<td>Batches: <strong><em>_</em>, Telemetry points: </strong><strong><em>, Audit entries: </em></strong>__</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pq-007-system-stability-over-extended-operation">PQ-007: System Stability Over Extended Operation<a class="headerlink" href="#pq-007-system-stability-over-extended-operation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test Case ID</strong></td>
+<td>PQ-007</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Verify system stability over an extended operation period (minimum 24 hours of continuous availability).</td>
+</tr>
+<tr>
+<td><strong>Preconditions</strong></td>
+<td>System deployed and operational with data from previous PQ tests.</td>
+</tr>
+<tr>
+<td><strong>Procedure</strong></td>
+<td>1. Record system start time and resource utilization (CPU, RAM, disk). <br> 2. Schedule periodic health checks every 15 minutes for 24 hours: <code>curl http://localhost:8000/health</code> <br> 3. During the 24-hour period, perform occasional data operations (imports, queries) to simulate low-level production use. <br> 4. After 24 hours, record resource utilization. <br> 5. Verify no container restarts: <code>docker compose ps</code> (check restart count). <br> 6. Verify audit trail integrity: <code>sporedb compliance validate --regulation all</code></td>
+</tr>
+<tr>
+<td><strong>Expected Result</strong></td>
+<td>All health checks return 200. No container restarts. Memory usage does not grow unboundedly (no memory leaks). Audit trail integrity maintained.</td>
+</tr>
+<tr>
+<td><strong>Actual Result</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Health check failures</strong></td>
+<td><strong><em>_</em> / </strong>___ (failed / total)</td>
+</tr>
+<tr>
+<td><strong>Pass/Fail</strong></td>
+<td>_____</td>
+</tr>
+<tr>
+<td><strong>Tester</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-acceptance-criteria">5. Acceptance Criteria<a class="headerlink" href="#5-acceptance-criteria" title="Permanent link">&para;</a></h2>
+<p>All quantitative acceptance criteria must be met for PQ approval.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Threshold</th>
+<th>Test Case</th>
+<th>Result</th>
+<th>Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSV import (50K rows)</td>
+<td>&lt; 30 seconds</td>
+<td>PQ-001</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Phase detection (50K rows)</td>
+<td>&lt; 30 seconds</td>
+<td>PQ-001</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Time-range query (1M rows, 10% selection)</td>
+<td>&lt; 5 seconds</td>
+<td>PQ-003</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Aggregation query (1M rows)</td>
+<td>&lt; 5 seconds</td>
+<td>PQ-003</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>API response time (95th percentile)</td>
+<td>&lt; 2 seconds</td>
+<td>PQ-001 through PQ-006</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Data integrity (export/re-import fidelity)</td>
+<td>100% match</td>
+<td>PQ-005</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Audit trail integrity</td>
+<td>Zero gaps, all signatures valid</td>
+<td>PQ-004</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Concurrent user operations</td>
+<td>Zero deadlocks, zero data corruption</td>
+<td>PQ-002</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Backup/restore data fidelity</td>
+<td>100% match (counts + Merkle root)</td>
+<td>PQ-006</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>System stability (24h uptime)</td>
+<td>Zero unplanned restarts</td>
+<td>PQ-007</td>
+<td>_____</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-deviations">6. Deviations<a class="headerlink" href="#6-deviations" title="Permanent link">&para;</a></h2>
+<p>Record any deviations from expected results during PQ execution. All deviations must be documented, assessed for impact, and resolved.</p>
+<table>
+<thead>
+<tr>
+<th>Deviation #</th>
+<th>Test Case</th>
+<th>Description</th>
+<th>Impact Assessment</th>
+<th>Resolution</th>
+<th>Resolved By</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-summary-of-results">7. Summary of Results<a class="headerlink" href="#7-summary-of-results" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total Test Cases</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Passed</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Failed</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Acceptance Criteria Met</td>
+<td>_____ / 10</td>
+</tr>
+<tr>
+<td>Deviations Recorded</td>
+<td>_____</td>
+</tr>
+<tr>
+<td>Deviations Resolved</td>
+<td>_____</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-conclusion">8. Conclusion<a class="headerlink" href="#8-conclusion" title="Permanent link">&para;</a></h2>
+<p>Based on the results documented in this protocol:</p>
+<ul>
+<li>[ ] All PQ tests PASSED and all acceptance criteria MET -- the system is qualified for production use in a GxP-regulated environment.</li>
+<li>[ ] One or more tests FAILED but deviations have been resolved -- the system is qualified for production use upon deviation closure and re-test confirmation.</li>
+<li>[ ] One or more acceptance criteria NOT MET -- the system requires remediation before production deployment. Root cause analysis and corrective actions are required.</li>
+</ul>
+<p><strong>Comments:</strong></p>
+<hr />
+<hr />
+<h2 id="9-approval-signatures">9. Approval Signatures<a class="headerlink" href="#9-approval-signatures" title="Permanent link">&para;</a></h2>
+<p>By signing below, I confirm that I have reviewed the results of this Performance Qualification protocol and that the conclusions are accurate and supported by the documented evidence.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Name</th>
+<th>Signature</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>QA Reviewer</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>System Administrator</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+<tr>
+<td><strong>Quality Head</strong></td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-a-reference-documents">Appendix A: Reference Documents<a class="headerlink" href="#appendix-a-reference-documents" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>ID</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IQ Protocol</td>
+<td>IQ-SPOREDB-001</td>
+<td>Installation Qualification protocol for SporeDB</td>
+</tr>
+<tr>
+<td>OQ Protocol</td>
+<td>OQ-SPOREDB-001</td>
+<td>Operational Qualification protocol for SporeDB</td>
+</tr>
+<tr>
+<td>Traceability Matrix</td>
+<td>RTM-SPOREDB-001</td>
+<td>Requirements Traceability Matrix</td>
+</tr>
+<tr>
+<td>Deployment SOP</td>
+<td><em>(site-specific)</em></td>
+<td>Standard operating procedure for SporeDB deployment</td>
+</tr>
+<tr>
+<td>Backup SOP</td>
+<td><em>(site-specific)</em></td>
+<td>Standard operating procedure for backup and restore</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-b-test-data-inventory">Appendix B: Test Data Inventory<a class="headerlink" href="#appendix-b-test-data-inventory" title="Permanent link">&para;</a></h2>
+<p>Record all test data files used during PQ execution.</p>
+<table>
+<thead>
+<tr>
+<th>File Name</th>
+<th>Description</th>
+<th>Row Count</th>
+<th>SHA-256 Checksum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-c-version-history">Appendix C: Version History<a class="headerlink" href="#appendix-c-version-history" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td><strong><em>_</em></strong><strong><em>_</em></strong>___</td>
+<td>Initial PQ protocol</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
