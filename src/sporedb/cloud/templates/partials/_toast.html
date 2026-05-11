@@ -1,0 +1,19 @@
+{# Toast notification partial -- used with HTMX OOB swap.
+   Server returns this alongside the main response body.
+   The toast auto-dismisses after 3 seconds via Alpine.js.
+
+   Variables:
+     message (str): The notification text.
+     level (str): "success" | "error" | "info" (default: "success").
+#}
+<div id="toast-container" hx-swap-oob="innerHTML"
+     x-data="{ show: true }"
+     x-init="setTimeout(() => show = false, 3000)">
+  <div x-show="show" x-transition
+       class="px-4 py-2 rounded shadow-lg text-white text-sm
+              {% if level == 'error' %}bg-red-500
+              {% elif level == 'info' %}bg-blue-500
+              {% else %}bg-green-500{% endif %}">
+    {{ message }}
+  </div>
+</div>

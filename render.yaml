@@ -1,0 +1,35 @@
+services:
+  - type: web
+    runtime: docker
+    name: sporedb
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: SPOREDB_DATABASE_URL
+        fromDatabase:
+          name: sporedb-db
+          property: connectionString
+      - key: SPOREDB_MODE
+        value: selfhosted
+      - key: SPOREDB_SERVER_PORT
+        value: "8000"
+      - key: SPOREDB_S3_ENDPOINT
+        sync: false
+      - key: SPOREDB_S3_ACCESS_KEY
+        sync: false
+      - key: SPOREDB_S3_SECRET_KEY
+        sync: false
+      - key: SPOREDB_S3_BUCKET
+        value: sporedb
+      - key: SPOREDB_ED25519_PRIVATE_KEY_B64
+        sync: false
+      - key: SPOREDB_ED25519_PUBLIC_KEY_B64
+        sync: false
+
+databases:
+  - name: sporedb-db
+    plan: basic-256mb
+    databaseName: sporedb
+    postgresMajorVersion: "16"

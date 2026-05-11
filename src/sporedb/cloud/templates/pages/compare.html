@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Compare Runs - SporeDB{% endblock %}
+{% block content %}
+<div x-data="{ selectedBatches: [], showChart: false }">
+  <h1 class="text-2xl font-bold mb-4">Compare Batch Runs</h1>
+  <p class="text-gray-500 mb-4">Select 2-10 batches to overlay their time-series data.</p>
+
+  {% if batches %}
+  <!-- Batch selection list with checkboxes -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-4">
+    {% for batch in batches %}
+    <label class="flex items-center gap-2 p-2 border rounded hover:bg-gray-50 cursor-pointer"
+           :class="selectedBatches.includes('{{ batch.id }}') ? 'border-blue-500 bg-blue-50' : ''">
+      <input type="checkbox" value="{{ batch.id }}"
+             x-model="selectedBatches"
+             :disabled="!selectedBatches.includes('{{ batch.id }}') && selectedBatches.length >= 10" />
+      <span>{{ batch.name }}</span>
+      <span class="text-xs text-gray-400">{{ batch.created_at }}</span>
+    </label>
+    {% endfor %}
+  </div>
+
+  <!-- Selected count and compare button -->
+  <div class="flex items-center gap-4 mb-4">
+    <span class="text-sm text-gray-500" x-text="selectedBatches.length + ' batch(es) selected'"></span>
+    <button @click="if(selectedBatches.length >= 2) { showChart = true; loadCompareChart(selectedBatches); }"
+            :disabled="selectedBatches.length < 2"
+            :class="selectedBatches.length < 2 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'"
+            class="text-white px-4 py-2 rounded">
+      Compare Selected
+    </button>
+  </div>
+
+  <!-- Signal selector -->
+  <div x-show="showChart" class="mb-4">
+    <label class="text-sm font-medium">Signal:</label>
+    <select id="compare-signal" @change="loadCompareChart(selectedBatches)"
+            class="border rounded px-2 py-1 ml-2">
+      <option value="OD600">OD600</option>
+      <option value="pH">pH</option>
+      <option value="temperature">Temperature</option>
+      <option value="dissolved_oxygen">Dissolved Oxygen</option>
+    </select>
+  </div>
+
+  <!-- Chart container -->
+  <div x-show="showChart" id="compare-chart-container" class="bg-white rounded shadow p-4">
+    <div id="compare-chart-plot" style="height: 500px;">
+      <span class="text-gray-400">Select batches and click Compare to load chart...</span>
+    </div>
+  </div>
+  {% else %}
+  <div class="text-gray-500 bg-gray-50 p-6 rounded border">
+    <p>No batches available. Import data first.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function loadCompareChart(batchIds) {
+  const signal = document.getElementById('compare-signal')?.value || 'OD600';
+  const params = batchIds.map(id => 'batch_ids=' + id).join('&');
+  renderChart('compare-chart-plot', '/dash/api/compare/figure?' + params + '&signal=' + signal);
+}
+</script>
+{% endblock %}

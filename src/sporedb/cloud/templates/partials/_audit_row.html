@@ -1,0 +1,40 @@
+{# Single audit trail row.
+   Variables (from loop context):
+     entry (AuditIndex): The audit entry.
+     verification_status (dict[str, bool|None]): entry.id -> verified status.
+#}
+<tr class="border-b hover:bg-gray-50">
+  <td class="p-2 text-sm text-gray-700">{{ entry.created_at.strftime('%Y-%m-%d %H:%M:%S') if entry.created_at else '' }}</td>
+  <td class="p-2">
+    {% if entry.action == 'create' %}
+    <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-700">create</span>
+    {% elif entry.action == 'update' %}
+    <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-blue-100 text-blue-700">update</span>
+    {% elif entry.action == 'delete' %}
+    <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-red-100 text-red-700">delete</span>
+    {% elif entry.action == 'sign' %}
+    <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-700">sign</span>
+    {% else %}
+    <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">{{ entry.action }}</span>
+    {% endif %}
+  </td>
+  <td class="p-2 text-sm text-gray-700">{{ entry.entity_type or '' }}</td>
+  <td class="p-2 text-sm">
+    {% if entry.entity_type == 'batch' and entry.entity_id %}
+    <a href="/dash/batches/{{ entry.entity_id }}" class="text-blue-500 hover:underline">{{ entry.entity_id[:8] }}...</a>
+    {% else %}
+    <span class="text-gray-700">{{ entry.entity_id or '' }}</span>
+    {% endif %}
+  </td>
+  <td class="p-2 text-sm text-gray-700">{{ entry.user_id or '' }}</td>
+  <td class="p-2 text-sm">
+    {% set vstatus = verification_status.get(entry.id) %}
+    {% if vstatus is true %}
+    <span class="text-green-600" title="Hash chain verified">&#10003;</span>
+    {% elif vstatus is false %}
+    <span class="text-red-600" title="Hash chain broken">&#10007;</span>
+    {% else %}
+    <span class="text-gray-400" title="Verification data not available">&mdash;</span>
+    {% endif %}
+  </td>
+</tr>

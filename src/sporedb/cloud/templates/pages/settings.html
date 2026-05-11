@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Settings - SporeDB{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+  <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+    <p class="text-amber-800 text-sm font-medium">Admin settings &mdash; changes affect all users in this organization.</p>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-6">Settings</h1>
+
+  {# User Management #}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4">User Management</h2>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 border-b">
+          <tr>
+            <th class="text-left p-3 font-medium text-gray-600">Name</th>
+            <th class="text-left p-3 font-medium text-gray-600">Email</th>
+            <th class="text-left p-3 font-medium text-gray-600">Role</th>
+            <th class="text-left p-3 font-medium text-gray-600">Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 text-gray-800">{{ u.name or u.email.split('@')[0] }}</td>
+            <td class="p-3 text-gray-600">{{ u.email }}</td>
+            <td class="p-3" id="role-{{ u.id }}">
+              {% if u.id == user.user_id %}
+                <span class="px-2 py-1 text-xs rounded-full
+                  {% if u.role == 'admin' %}bg-red-100 text-red-700
+                  {% elif u.role == 'editor' %}bg-blue-100 text-blue-700
+                  {% else %}bg-gray-100 text-gray-700{% endif %}">{{ u.role }}</span>
+                <span class="text-xs text-gray-400 ml-1">(you)</span>
+              {% else %}
+              <div x-data="{ editing: false }">
+                <span x-show="!editing" @click="editing = true" class="cursor-pointer px-2 py-1 text-xs rounded-full
+                  {% if u.role == 'admin' %}bg-red-100 text-red-700
+                  {% elif u.role == 'editor' %}bg-blue-100 text-blue-700
+                  {% else %}bg-gray-100 text-gray-700{% endif %}">{{ u.role }}</span>
+                <form x-show="editing" class="inline"
+                      hx-post="/dash/settings/users/{{ u.id }}/role"
+                      hx-target="#role-{{ u.id }}"
+                      hx-swap="innerHTML">
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token | default('') }}">
+                  <select name="role" @change="$el.form.requestSubmit(); editing = false"
+                          class="text-xs border rounded p-1">
+                    <option value="viewer" {% if u.role == 'viewer' %}selected{% endif %}>viewer</option>
+                    <option value="editor" {% if u.role == 'editor' %}selected{% endif %}>editor</option>
+                    <option value="admin" {% if u.role == 'admin' %}selected{% endif %}>admin</option>
+                  </select>
+                </form>
+              </div>
+              {% endif %}
+            </td>
+            <td class="p-3 text-gray-500">{{ u.created_at.strftime('%Y-%m-%d') if u.created_at else '-' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {# System Configuration #}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4">System Configuration</h2>
+    <div class="bg-white rounded-lg shadow p-4 space-y-3">
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-600">Deployment Mode</span>
+        <span class="font-medium">{{ settings.mode if settings.mode else 'cloud' }}</span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-600">App Version</span>
+        <span class="font-medium">{{ settings.app_version }}</span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-600">Debug Mode</span>
+        <span class="font-medium">{{ 'Enabled' if settings.debug else 'Disabled' }}</span>
+      </div>
+    </div>
+  </section>
+
+  {# Tenant Info #}
+  {% if tenant %}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4">Organization</h2>
+    <div class="bg-white rounded-lg shadow p-4 space-y-3">
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-600">Name</span>
+        <span class="font-medium">{{ tenant.name }}</span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-600">Slug</span>
+        <span class="font-mono text-gray-500">{{ tenant.slug }}</span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-600">Created</span>
+        <span class="font-medium">{{ tenant.created_at.strftime('%Y-%m-%d') if tenant.created_at else '-' }}</span>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

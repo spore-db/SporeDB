@@ -1,0 +1,70 @@
+site_name: SporeDB
+site_url: https://spore-db.github.io/SporeDB/
+site_description: Bioprocess-native time-series database
+repo_url: https://github.com/spore-db/SporeDB
+repo_name: spore-db/SporeDB
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            docstring_section_style: list
+            show_root_heading: true
+            show_source: true
+            merge_init_into_class: true
+            separate_signature: true
+            show_signature_annotations: true
+            signature_crossrefs: true
+            inherited_members: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Quick Start: quickstart.md
+  - Configuration: configuration.md
+  - Deployment:
+    - Self-Hosted: deployment/selfhosted.md
+    - Deploy Guides: deploy/index.md
+    - Railway: deploy/railway.md
+    - Render: deploy/render.md
+    - Fly.io: deploy/fly-io.md
+    - AWS ECS/Fargate: deploy/aws.md
+    - DigitalOcean: deploy/digitalocean.md
+  - API Reference:
+    - Overview: reference/index.md
+    - SporeDB: reference/sporedb.md
+  - Contributing: contributing.md

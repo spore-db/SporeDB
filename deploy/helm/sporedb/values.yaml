@@ -1,0 +1,156 @@
+# SporeDB Helm Chart Default Values
+# -----------------------------------
+# Override these values with --set or a custom values file.
+
+replicaCount: 1
+
+image:
+  repository: sporedb
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# -- SporeDB application configuration
+sporedb:
+  mode: selfhosted
+  config: |
+    mode: selfhosted
+    server:
+      host: 0.0.0.0
+      port: 8000
+      workers: 4
+    database:
+      url: postgresql+asyncpg://sporedb:changeme@{{ include "sporedb.fullname" . }}-postgresql:5432/sporedb
+    storage:
+      type: s3
+      endpoint: http://{{ include "sporedb.fullname" . }}-minio:9000
+      access_key: minioadmin
+      secret_key: minioadmin
+      bucket: sporedb
+      region: us-east-1
+    auth:
+      jwt_private_key_path: /etc/sporedb/keys/jwt-private-key
+      jwt_public_key_path: /etc/sporedb/keys/jwt-public-key
+      jwt_algorithm: EdDSA
+      access_token_expire_minutes: 15
+      refresh_token_expire_days: 7
+    compliance:
+      audit_trail: true
+      require_signatures: true
+      rbac_enabled: true
+    cors:
+      origins: []
+
+# -- Compliance settings
+compliance:
+  auditTrail: true
+  requireSignatures: true
+  rbacEnabled: true
+
+# -- JWT signing keys (required -- generate with scripts/generate-keys.sh)
+secrets:
+  jwtPrivateKey: ""
+  jwtPublicKey: ""
+
+# -- Service configuration
+service:
+  type: ClusterIP
+  port: 8000
+
+# -- Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: sporedb.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+    # - secretName: sporedb-tls
+    #   hosts:
+    #     - sporedb.local
+
+# -- Resource limits and requests
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+
+# -- Persistence for SporeDB data
+persistence:
+  enabled: true
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+# -- Pod-level settings
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+podAnnotations: {}
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false
+  capabilities:
+    drop:
+      - ALL
+
+# -- Liveness and readiness probes
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# -- Bitnami PostgreSQL subchart
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: changeme
+    username: sporedb
+    password: changeme
+    database: sporedb
+  primary:
+    persistence:
+      enabled: true
+      size: 10Gi
+
+# -- Bitnami MinIO subchart
+minio:
+  enabled: true
+  auth:
+    rootUser: minioadmin
+    rootPassword: minioadmin
+  defaultBuckets: sporedb
+  persistence:
+    enabled: true
+    size: 20Gi

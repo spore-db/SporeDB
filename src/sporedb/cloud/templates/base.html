@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SporeDB{% endblock %}</title>
+
+  <!-- Tailwind CSS v4 Play CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- HTMX -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" crossorigin="anonymous"></script>
+  <!-- HTMX Alpine.js compat extension -->
+  <script src="https://cdn.jsdelivr.net/npm/htmx-ext-alpine-morph@2.0.0/alpine-morph.js"></script>
+  <!-- Alpine.js (MUST be after HTMX + extension, MUST have defer) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.11/dist/cdn.min.js"></script>
+
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-3.5.0.min.js" charset="utf-8"></script>
+
+  <!-- Dashboard styles -->
+  <link rel="stylesheet" href="/dash/static/css/dashboard.css">
+
+  {% block head %}{% endblock %}
+</head>
+<body class="bg-white text-gray-900" hx-ext="alpine-morph">
+  <div class="flex min-h-screen">
+    {# Sidebar (hidden on login page where user is null) #}
+    {% if user %}{% include "components/sidebar.html" %}{% endif %}
+
+    {# Main content area #}
+    <div class="flex-1 flex flex-col">
+      {% if user %}{% include "components/navbar.html" %}{% endif %}
+
+      <main class="flex-1 p-6">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  {# Toast container for HTMX OOB swaps #}
+  <div id="toast-container" class="fixed top-4 right-4 z-50"></div>
+
+  {# Dashboard JavaScript #}
+  <script src="/dash/static/js/htmx-config.js"></script>
+  <script src="/dash/static/js/charts.js"></script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

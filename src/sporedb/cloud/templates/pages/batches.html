@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Batches - SporeDB{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">Batches</h1>
+  {% if user.role in ('editor', 'admin') %}
+  <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm" disabled title="Import functionality coming soon">
+    Import Batch
+  </button>
+  {% endif %}
+</div>
+
+{# Search and filter controls #}
+<div class="flex items-center gap-4 mb-4">
+  <div class="relative">
+    <input type="search" name="q" placeholder="Search batches..."
+           value="{{ query }}"
+           hx-get="/dash/batches/search"
+           hx-trigger="input changed delay:300ms, search"
+           hx-target="#batch-table-body"
+           hx-indicator="#search-spinner"
+           hx-include="[name='lifecycle']"
+           class="border border-gray-300 rounded px-3 py-2 w-64 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    <span id="search-spinner" class="htmx-indicator text-gray-400 text-sm ml-2">Searching...</span>
+  </div>
+
+  <select name="lifecycle"
+          hx-get="/dash/batches/search"
+          hx-trigger="change"
+          hx-target="#batch-table-body"
+          hx-include="[name='q']"
+          class="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <option value="">All Statuses</option>
+    <option value="active">Active</option>
+    <option value="completed">Completed</option>
+    <option value="planned">Planned</option>
+  </select>
+</div>
+
+{# Batch table #}
+<div class="bg-white rounded shadow overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="bg-gray-50 border-b">
+      <tr>
+        <th class="text-left px-4 py-3 font-medium text-gray-600">Name</th>
+        <th class="text-left px-4 py-3 font-medium text-gray-600">Strain</th>
+        <th class="text-left px-4 py-3 font-medium text-gray-600">Operator</th>
+        <th class="text-left px-4 py-3 font-medium text-gray-600">Created</th>
+        <th class="text-left px-4 py-3 font-medium text-gray-600">Status</th>
+      </tr>
+    </thead>
+    <tbody id="batch-table-body">
+      {% include "partials/_batch_table.html" %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

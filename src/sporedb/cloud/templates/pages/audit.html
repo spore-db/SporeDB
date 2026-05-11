@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Audit Trail - SporeDB{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Audit Trail</h1>
+
+<!-- Filter bar -->
+<div class="flex flex-wrap items-center gap-4 mb-4 p-3 bg-gray-50 rounded border">
+  <div class="flex items-center gap-2">
+    <label class="text-sm font-medium text-gray-600">Action:</label>
+    <select name="action"
+            hx-get="/dash/audit/search"
+            hx-target="#audit-table-body"
+            hx-trigger="change"
+            hx-indicator="#audit-spinner"
+            hx-include="[name='action']"
+            class="border rounded px-2 py-1 text-sm">
+      <option value="" {% if not action_filter %}selected{% endif %}>All Actions</option>
+      <option value="create" {% if action_filter == 'create' %}selected{% endif %}>Create</option>
+      <option value="update" {% if action_filter == 'update' %}selected{% endif %}>Update</option>
+      <option value="delete" {% if action_filter == 'delete' %}selected{% endif %}>Delete</option>
+      <option value="sign" {% if action_filter == 'sign' %}selected{% endif %}>Sign</option>
+    </select>
+  </div>
+  <span id="audit-spinner" class="htmx-indicator text-sm text-gray-400">Loading...</span>
+</div>
+
+<!-- Audit table -->
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="border-b text-left text-sm text-gray-600">
+        <th class="p-2">Timestamp</th>
+        <th class="p-2">Action</th>
+        <th class="p-2">Entity Type</th>
+        <th class="p-2">Entity ID</th>
+        <th class="p-2">User</th>
+        <th class="p-2">Verification</th>
+      </tr>
+    </thead>
+    <tbody id="audit-table-body">
+      {% include "partials/_audit_table.html" %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Verification legend -->
+<div class="mt-4 p-3 bg-gray-50 rounded border text-sm text-gray-600">
+  <span class="font-medium">Verification Legend:</span>
+  <span class="ml-3 text-green-600">&#10003; Hash chain verified</span>
+  <span class="ml-3 text-red-600">&#10007; Chain broken</span>
+  <span class="ml-3 text-gray-400">&mdash; Verification data not available</span>
+</div>
+{% endblock %}

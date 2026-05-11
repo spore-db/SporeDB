@@ -1,0 +1,32 @@
+apiVersion: v2
+name: sporedb
+description: Bioprocess-native time-series database - self-hosted deployment
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+home: https://github.com/spore-db/SporeDB
+sources:
+  - https://github.com/spore-db/SporeDB
+
+keywords:
+  - bioprocess
+  - time-series
+  - database
+  - fermentation
+  - compliance
+  - fda-21-cfr-part-11
+
+maintainers:
+  - name: Rishikesh Ranjan
+    url: https://github.com/spore-db
+
+dependencies:
+  - name: postgresql
+    version: "16.4.2"
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled
+  - name: minio
+    version: "14.8.5"
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: minio.enabled

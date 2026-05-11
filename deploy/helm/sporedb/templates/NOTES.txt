@@ -1,0 +1,40 @@
+SporeDB has been deployed successfully!
+
+1. Access the SporeDB API:
+{{- if .Values.ingress.enabled }}
+  URL: http{{ if $.Values.ingress.tls }}s{{ end }}://{{ (first .Values.ingress.hosts).host }}
+{{- else if contains "NodePort" .Values.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "sporedb.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.service.type }}
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "sporedb.fullname" . }}
+{{- else }}
+  kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "sporedb.fullname" . }} 8000:{{ .Values.service.port }}
+  echo "SporeDB API: http://localhost:8000"
+  echo "OpenAPI docs: http://localhost:8000/docs"
+{{- end }}
+
+2. Generate JWT signing keys (if not provided via values):
+
+   # Generate Ed25519 keypair
+   openssl genpkey -algorithm Ed25519 -out cloud_private.pem
+   openssl pkey -in cloud_private.pem -pubout -out cloud_public.pem
+
+   # Update the secret with the keys
+   kubectl create secret generic {{ include "sporedb.fullname" . }} \
+     --from-file=jwt-private-key=cloud_private.pem \
+     --from-file=jwt-public-key=cloud_public.pem \
+     --dry-run=client -o yaml | kubectl apply -f -
+
+3. Verify compliance:
+
+   kubectl exec -it deploy/{{ include "sporedb.fullname" . }} -- \
+     python -m sporedb.compliance.validator --check
+
+4. Check deployment health:
+
+   kubectl get pods -l "app.kubernetes.io/name={{ include "sporedb.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+
+For more information, see: https://github.com/ranjanrishikesh/SporeDB

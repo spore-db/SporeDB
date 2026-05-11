@@ -1,0 +1,39 @@
+/* SporeDB Dashboard - Custom styles beyond Tailwind */
+
+/* HTMX indicator styles */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline;
+}
+
+.htmx-request.htmx-indicator {
+  display: inline;
+}
+
+/* Loading overlay for chart containers */
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #6b7280;
+}
+
+/* Smooth transitions for HTMX content swaps */
+.htmx-swapping {
+  opacity: 0.5;
+  transition: opacity 200ms ease-in;
+}
+
+.htmx-settling {
+  opacity: 1;
+  transition: opacity 200ms ease-out;
+}
+
+/* Sidebar active link underline (supplements Tailwind classes) */
+.sidebar-active {
+  border-left: 3px solid #3b82f6;
+}

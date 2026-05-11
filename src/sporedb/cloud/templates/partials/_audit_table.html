@@ -1,0 +1,48 @@
+{# Audit table body partial — swapped via HTMX for pagination/filtering.
+   Variables:
+     entries (list[AuditIndex]): Audit entries for current page.
+     verification_status (dict[str, bool|None]): entry.id -> verified status.
+     page (int): Current page number.
+     has_next (bool): Whether there is a next page.
+     action_filter (str): Current action filter value (may be empty).
+#}
+{% if entries %}
+  {% for entry in entries %}
+    {% include "partials/_audit_row.html" %}
+  {% endfor %}
+{% else %}
+<tr>
+  <td colspan="6" class="p-4 text-center text-gray-500">No audit entries found.</td>
+</tr>
+{% endif %}
+
+{# Pagination row #}
+<tr>
+  <td colspan="6" class="p-2">
+    <div class="flex items-center gap-2 mt-2">
+      {% if page > 1 %}
+      <button
+        hx-get="/dash/audit/search?page={{ page - 1 }}{% if action_filter %}&action={{ action_filter }}{% endif %}"
+        hx-target="#audit-table-body"
+        hx-swap="innerHTML"
+        class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
+      >
+        Previous
+      </button>
+      {% endif %}
+
+      <span class="px-3 py-1 text-sm text-gray-600">Page {{ page }}</span>
+
+      {% if has_next %}
+      <button
+        hx-get="/dash/audit/search?page={{ page + 1 }}{% if action_filter %}&action={{ action_filter }}{% endif %}"
+        hx-target="#audit-table-body"
+        hx-swap="innerHTML"
+        class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
+      >
+        Next
+      </button>
+      {% endif %}
+    </div>
+  </td>
+</tr>

@@ -1,0 +1,27 @@
+{# HTMX partial: batch table body rows + pagination.
+   Swapped into #batch-table-body by search/filter requests.
+
+   Variables:
+     batches (list[CloudBatch]): Batch objects to render.
+     page (int): Current page number.
+     query (str): Current search query.
+     has_next (bool): Whether there is a next page.
+#}
+{% if batches %}
+  {% for batch in batches %}
+    {% include "partials/_batch_row.html" %}
+  {% endfor %}
+{% else %}
+  <tr>
+    <td colspan="5" class="text-center py-8 text-gray-400">No batches found</td>
+  </tr>
+{% endif %}
+{% if batches %}
+  <tr>
+    <td colspan="5" class="px-4 py-2">
+      {% set base_url = "/dash/batches/search" %}
+      {% set hx_target = "#batch-table-body" %}
+      {% include "partials/_pagination.html" %}
+    </td>
+  </tr>
+{% endif %}

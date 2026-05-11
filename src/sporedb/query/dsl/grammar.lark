@@ -1,0 +1,95 @@
+// SporeDB Bioprocess DSL Grammar
+// PromQL-style query language for batch analytics
+// Uses LALR(1) parsing for performance
+
+start: query
+
+query: select_clause from_clause where_clause? group_clause? order_clause? limit_clause?
+
+// SELECT clause
+select_clause: "SELECT"i select_expr ("," select_expr)*
+
+?select_expr: alias_expr
+            | expr
+
+alias_expr: expr "AS"i IDENT
+
+// FROM clause
+from_clause: "FROM"i batch_source
+
+?batch_source: all_batches
+             | single_batch
+             | golden_ref
+
+all_batches: "batches"i filter_expr?
+single_batch: "batch"i "(" ESCAPED_STRING ")"
+golden_ref: "golden_profile"i "(" ESCAPED_STRING ")"
+
+filter_expr: "[" condition "]"
+
+// WHERE clause
+where_clause: "WHERE"i condition
+
+// GROUP BY clause
+group_clause: "GROUP"i "BY"i field_ref ("," field_ref)*
+
+// ORDER BY clause
+order_clause: "ORDER"i "BY"i field_ref direction?
+
+direction: DIRECTION
+DIRECTION: "ASC"i | "DESC"i
+
+// LIMIT clause
+limit_clause: "LIMIT"i INT
+
+// Expressions
+?expr: func_call
+     | field_ref
+     | literal
+
+func_call: IDENT "(" args? ")"
+args: expr ("," expr)*
+
+field_ref: IDENT "." IDENT ("." IDENT)*
+         | IDENT
+
+// Conditions (precedence: NOT > AND > OR)
+?condition: or_cond
+
+?or_cond: and_cond
+        | or_cond "OR"i and_cond
+
+?and_cond: not_cond
+         | and_cond "AND"i not_cond
+
+?not_cond: "NOT"i atom_cond -> not_cond
+         | atom_cond
+
+?atom_cond: comparison
+          | "(" condition ")"
+
+comparison: expr COMP_OP expr
+
+// Literals
+?literal: number
+        | string
+
+number: SIGNED_NUMBER
+string: ESCAPED_STRING
+
+// Operators
+COMP_OP: "!=" | "<=" | ">=" | "=" | "<" | ">" | "LIKE"i
+
+// Identifier terminal - matches any non-keyword name
+// Keywords are handled as string literals in rules above
+IDENT: /(?!(?:SELECT|FROM|WHERE|GROUP|ORDER|BY|LIMIT|AND|OR|NOT|AS|ASC|DESC|LIKE)\b)[a-zA-Z_][a-zA-Z0-9_]*/i
+
+// Imports
+%import common.INT
+%import common.SIGNED_NUMBER
+%import common.ESCAPED_STRING
+%import common.WS
+
+// Ignore whitespace and single-line comments
+%ignore WS
+%ignore /--[^\n]*/

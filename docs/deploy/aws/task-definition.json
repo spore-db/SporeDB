@@ -1,0 +1,70 @@
+{
+  "family": "sporedb",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "sporedb",
+      "image": "ghcr.io/spore-db/sporedb:latest",
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "command": [
+        "sh",
+        "-c",
+        "mkdir -p /home/sporedb/app/keys && echo \"$SPOREDB_ED25519_PRIVATE_KEY_B64\" | base64 -d > /home/sporedb/app/keys/cloud_private.pem && echo \"$SPOREDB_ED25519_PUBLIC_KEY_B64\" | base64 -d > /home/sporedb/app/keys/cloud_public.pem && exec uvicorn sporedb.cloud.app:create_app --factory --host 0.0.0.0 --port 8000"
+      ],
+      "environment": [
+        { "name": "SPOREDB_MODE", "value": "selfhosted" },
+        { "name": "SPOREDB_SERVER_PORT", "value": "8000" },
+        { "name": "SPOREDB_S3_BUCKET", "value": "sporedb" },
+        { "name": "SPOREDB_JWT_SECRET_KEY_PATH", "value": "/home/sporedb/app/keys/cloud_private.pem" },
+        { "name": "SPOREDB_JWT_PUBLIC_KEY_PATH", "value": "/home/sporedb/app/keys/cloud_public.pem" }
+      ],
+      "secrets": [
+        {
+          "name": "SPOREDB_DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:sporedb/database-url"
+        },
+        {
+          "name": "SPOREDB_S3_ACCESS_KEY",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:sporedb/s3-access-key"
+        },
+        {
+          "name": "SPOREDB_S3_SECRET_KEY",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:sporedb/s3-secret-key"
+        },
+        {
+          "name": "SPOREDB_ED25519_PRIVATE_KEY_B64",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:sporedb/ed25519-private-key-b64"
+        },
+        {
+          "name": "SPOREDB_ED25519_PUBLIC_KEY_B64",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:sporedb/ed25519-public-key-b64"
+        }
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 10
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/sporedb",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "sporedb"
+        }
+      }
+    }
+  ]
+}

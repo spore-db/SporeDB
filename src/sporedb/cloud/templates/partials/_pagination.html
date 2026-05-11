@@ -1,0 +1,35 @@
+{# Reusable pagination partial.
+   Uses HTMX hx-get for page navigation without full page reload.
+
+   Variables:
+     page (int): Current page number.
+     has_next (bool): Whether there is a next page.
+     base_url (str): The base URL for pagination (e.g. "/dash/batches/search").
+     query (str, optional): Current search query to preserve across pages.
+     hx_target (str): The HTMX target element ID for content swap.
+#}
+<div id="pagination" class="flex items-center gap-2 mt-4">
+  {% if page > 1 %}
+  <button
+    hx-get="{{ base_url }}?page={{ page - 1 }}{% if query %}&q={{ query }}{% endif %}"
+    hx-target="{{ hx_target }}"
+    hx-swap="innerHTML"
+    class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
+  >
+    Previous
+  </button>
+  {% endif %}
+
+  <span class="px-3 py-1 text-sm text-gray-600">Page {{ page }}</span>
+
+  {% if has_next %}
+  <button
+    hx-get="{{ base_url }}?page={{ page + 1 }}{% if query %}&q={{ query }}{% endif %}"
+    hx-target="{{ hx_target }}"
+    hx-swap="innerHTML"
+    class="px-3 py-1 border border-gray-300 rounded text-sm hover:bg-gray-50 transition-colors"
+  >
+    Next
+  </button>
+  {% endif %}
+</div>

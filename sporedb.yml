@@ -1,0 +1,42 @@
+# SporeDB Self-Hosted Configuration
+# -----------------------------------
+# This file configures all SporeDB settings for on-premises deployment.
+# Environment variables with the SPOREDB_ prefix override any value here.
+#
+# Copy this file and edit for your environment:
+#   cp sporedb.yml sporedb.local.yml
+#   # edit sporedb.local.yml
+
+mode: selfhosted
+
+server:
+  host: 0.0.0.0
+  port: 8000
+  workers: 4
+
+database:
+  url: postgresql+asyncpg://sporedb:changeme@postgres:5432/sporedb
+
+storage:
+  type: s3
+  endpoint: http://minio:9000
+  access_key: minioadmin
+  secret_key: minioadmin
+  bucket: sporedb
+  region: us-east-1
+
+auth:
+  jwt_private_key_path: keys/cloud_private.pem
+  jwt_public_key_path: keys/cloud_public.pem
+  jwt_algorithm: EdDSA
+  access_token_expire_minutes: 15
+  refresh_token_expire_days: 7
+
+compliance:
+  audit_trail: true
+  require_signatures: true
+  rbac_enabled: true
+
+cors:
+  origins:
+    - http://localhost:3000

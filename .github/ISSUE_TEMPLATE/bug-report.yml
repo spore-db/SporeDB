@@ -1,0 +1,47 @@
+name: Bug Report
+description: Report a bug in SporeDB
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting a bug! Please fill out the form below.
+  - type: input
+    id: version
+    attributes:
+      label: SporeDB Version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Installation Method
+      options:
+        - pip install sporedb
+        - Docker
+        - From source
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal code to reproduce the issue
+      render: python
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, etc.

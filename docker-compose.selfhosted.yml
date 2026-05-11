@@ -1,0 +1,29 @@
+# SporeDB Self-Hosted Docker Compose Overlay
+#
+# Usage: docker compose -f docker-compose.yml -f docker-compose.selfhosted.yml up -d
+#
+# This overlay configures SporeDB for on-premises deployment with:
+# - SPOREDB_MODE=selfhosted (disables telemetry, uses local key management)
+# - Unified config file mounted from ./sporedb.yml
+# - Docker secrets for JWT signing key
+# - Persistent data volume
+
+services:
+  sporedb:
+    environment:
+      - SPOREDB_MODE=selfhosted
+      - SPOREDB_DATABASE_URL=postgresql+asyncpg://sporedb:${POSTGRES_PASSWORD:-sporedb}@postgres:5432/sporedb
+      - SPOREDB_S3_ENDPOINT=http://minio:9000
+      - SPOREDB_JWT_SECRET_KEY_PATH=/run/secrets/signing_key
+    volumes:
+      - ./sporedb.yml:/home/sporedb/app/sporedb.yml:ro
+      - sporedb_data:/home/sporedb/app/data
+    secrets:
+      - signing_key
+
+secrets:
+  signing_key:
+    file: ./keys/cloud_private.pem
+
+volumes:
+  sporedb_data:

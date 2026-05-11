@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}{{ batch.name }} - SporeDB{% endblock %}
+{% block content %}
+{% set meta = batch.metadata_json | parse_json %}
+{% set tags = batch.tags_json | parse_json %}
+
+{# Breadcrumb #}
+<nav class="text-sm text-gray-500 mb-4">
+  <a href="/dash/batches" class="hover:text-blue-500 transition-colors">Batches</a>
+  <span class="mx-1">/</span>
+  <span class="text-gray-900">{{ batch.name }}</span>
+</nav>
+
+{# Metadata card #}
+<div class="bg-white rounded shadow p-6 mb-6">
+  <h1 class="text-2xl font-bold mb-4">{{ batch.name }}</h1>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+    <div>
+      <dt class="text-gray-500 font-medium">Status</dt>
+      <dd class="mt-1">
+        <span class="inline-block px-2 py-0.5 text-xs rounded-full
+          {% if batch.lifecycle == 'active' %}bg-green-100 text-green-700
+          {% elif batch.lifecycle == 'completed' %}bg-blue-100 text-blue-700
+          {% else %}bg-gray-100 text-gray-600{% endif %}">
+          {{ batch.lifecycle | capitalize }}
+        </span>
+      </dd>
+    </div>
+    <div>
+      <dt class="text-gray-500 font-medium">Created</dt>
+      <dd class="mt-1">{{ batch.created_at.strftime('%Y-%m-%d %H:%M') if batch.created_at else '-' }}</dd>
+    </div>
+    {% if meta.get('strain') %}
+    <div>
+      <dt class="text-gray-500 font-medium">Strain</dt>
+      <dd class="mt-1">{{ meta.strain }}</dd>
+    </div>
+    {% endif %}
+    {% if meta.get('media') %}
+    <div>
+      <dt class="text-gray-500 font-medium">Media</dt>
+      <dd class="mt-1">{{ meta.media }}</dd>
+    </div>
+    {% endif %}
+    {% if meta.get('scale') %}
+    <div>
+      <dt class="text-gray-500 font-medium">Scale</dt>
+      <dd class="mt-1">{{ meta.scale }}</dd>
+    </div>
+    {% endif %}
+    {% if meta.get('operator') %}
+    <div>
+      <dt class="text-gray-500 font-medium">Operator</dt>
+      <dd class="mt-1">{{ meta.operator }}</dd>
+    </div>
+    {% endif %}
+  </div>
+  {% if tags %}
+  <div class="mt-4">
+    <dt class="text-gray-500 font-medium text-sm">Tags</dt>
+    <dd class="mt-1">
+      {% if tags is iterable and tags is not mapping %}
+        {% for tag in tags %}
+          <span class="inline-block px-2 py-0.5 text-xs rounded-full bg-yellow-100 text-yellow-700 mr-1">{{ tag }}</span>
+        {% endfor %}
+      {% endif %}
+    </dd>
+  </div>
+  {% endif %}
+</div>
+
+{# Time-series chart #}
+<div id="batch-chart" class="bg-white rounded shadow p-4 mb-6">
+  <div class="flex items-center justify-between mb-2">
+    <h2 class="text-lg font-semibold">Time Series</h2>
+    <select id="signal-selector"
+            x-data
+            x-on:change="renderChart('batch-chart-plot', '/dash/api/batches/{{ batch.id }}/figure?signal=' + $event.target.value)"
+            class="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <option value="OD600">OD600</option>
+      <option value="pH">pH</option>
+      <option value="temperature">Temperature</option>
+      <option value="dissolved_oxygen">Dissolved Oxygen</option>
+    </select>
+  </div>
+  <div id="batch-chart-plot" style="height: 400px;">
+    <span class="text-gray-400 text-sm">Loading chart...</span>
+  </div>
+  <p class="text-xs text-gray-400 mt-2">Phase boundaries shown as vertical lines on chart.</p>
+</div>
+
+{# Linked assay data #}
+<div class="bg-white rounded shadow p-4">
+  <h2 class="text-lg font-semibold mb-2">Linked Assay Data</h2>
+  {% if meta.get('assays') %}
+    <p class="text-gray-600 text-sm">Assay data linked to this batch.</p>
+  {% else %}
+    <p class="text-gray-400 text-sm">No assay data available.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    renderChart('batch-chart-plot', '/dash/api/batches/{{ batch.id }}/figure?signal=OD600');
+  });
+</script>
+{% endblock %}

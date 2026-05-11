@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sporedb.fullname" . }}
+  labels:
+    {{- include "sporedb.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sporedb.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "sporedb.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: SPOREDB_MODE
+              value: {{ .Values.sporedb.mode | quote }}
+            - name: SPOREDB_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "sporedb.fullname" . }}
+                  key: database-url
+            - name: SPOREDB_S3_ENDPOINT
+              value: "http://{{ include "sporedb.fullname" . }}-minio:9000"
+            - name: SPOREDB_JWT_SECRET_KEY_PATH
+              value: "/etc/sporedb/keys/jwt-private-key"
+            - name: SPOREDB_JWT_PUBLIC_KEY_PATH
+              value: "/etc/sporedb/keys/jwt-public-key"
+            - name: SPOREDB_COMPLIANCE_AUDIT_TRAIL
+              value: {{ .Values.compliance.auditTrail | quote }}
+            - name: SPOREDB_COMPLIANCE_REQUIRE_SIGNATURES
+              value: {{ .Values.compliance.requireSignatures | quote }}
+            - name: SPOREDB_COMPLIANCE_RBAC_ENABLED
+              value: {{ .Values.compliance.rbacEnabled | quote }}
+          volumeMounts:
+            - name: config
+              mountPath: /home/sporedb/app/sporedb.yml
+              subPath: sporedb.yml
+              readOnly: true
+            - name: jwt-keys
+              mountPath: /etc/sporedb/keys
+              readOnly: true
+            {{- if .Values.persistence.enabled }}
+            - name: data
+              mountPath: /home/sporedb/app/data
+            {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "sporedb.fullname" . }}
+        - name: jwt-keys
+          secret:
+            secretName: {{ include "sporedb.fullname" . }}
+            items:
+              - key: jwt-private-key
+                path: jwt-private-key
+              - key: jwt-public-key
+                path: jwt-public-key
+        {{- if .Values.persistence.enabled }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "sporedb.fullname" . }}-data
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

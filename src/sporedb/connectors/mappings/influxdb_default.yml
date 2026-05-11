@@ -1,0 +1,17 @@
+timestamp_field: "_time"
+variable_mappings:
+  - source: "dissolved_oxygen"
+    target: "dissolved_oxygen"
+    unit: "%"
+  - source: "ph"
+    target: "ph"
+  - source: "temperature"
+    target: "temperature"
+    unit: "C"
+  - source: "agitation"
+    target: "agitation_speed"
+    unit: "rpm"
+  - source: "optical_density"
+    target: "optical_density"
+metadata_mappings:
+  reactor_id: "bioreactor_id"
