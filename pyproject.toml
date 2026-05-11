@@ -150,6 +150,10 @@ module = [
     "authlib.*",
     "httpx",
     "httpx.*",
+    "boto3",
+    "boto3.*",
+    "botocore",
+    "botocore.*",
 ]
 ignore_missing_imports = true
 
